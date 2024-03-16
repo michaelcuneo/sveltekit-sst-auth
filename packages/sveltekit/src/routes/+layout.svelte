@@ -1,0 +1,25 @@
+<script lang="ts">
+	import Footer from './Footer.svelte';
+	import Header from './Header.svelte';
+	import type { PageData } from './$types';
+
+	import 'sanitize.css';
+	import './style.css';
+
+	export let data: PageData;
+</script>
+
+<div class="wrapper">
+	<Header {data} />
+	<slot />
+	<Footer />
+</div>
+
+<style>
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		height: 100dvh;
+		width: 100vw;
+	}
+</style>

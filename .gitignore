@@ -1,0 +1,17 @@
+.DS_Store
+node_modules
+.vscode
+.idea
+/packages/sveltekit/node_modules
+/packages/sveltekit/build
+/packages/sveltekit/.svelte-kit
+/packages/sveltekit/package
+/packages/sveltekit/.env
+/packages/sveltekit/.env.*
+/packages/sveltekit/!.env.example
+/packages/sveltekit/vite.config.js.timestamp-*
+/packages/sveltekit/vite.config.ts.timestamp-*
+.sst
+.build
+.open-next
+.env*.local
