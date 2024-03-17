@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	const currentUsers = USERS;
 
-	let userFound = currentUsers.find((user) => {
+	const userFound = currentUsers.find((user) => {
 		return user.id === locals.session?.userId;
 	});
 
