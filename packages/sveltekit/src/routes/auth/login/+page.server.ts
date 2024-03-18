@@ -1,7 +1,6 @@
 import type { Actions } from './$types';
 import { mailer } from '$lib/nodemailer';
 import { fail } from '@sveltejs/kit';
-import jwt from 'jsonwebtoken';
 import { Config } from 'sst/node/config';
 import { USERS } from '$lib/constants';
 
@@ -14,12 +13,8 @@ export const actions = {
 
 		if (user != null) {
 			try {
-				const token = jwt.sign({ userId: user.id }, Config.JWT_SECRET, {
-					expiresIn: '1h'
-				});
 				return mailer({
 					email: user.email,
-					token,
 					service: Config.EMAIL_SERVICE,
 					host: Config.EMAIL_HOST,
 					port: Number(Config.EMAIL_PORT),

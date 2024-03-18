@@ -9,6 +9,18 @@ body {
   font-style: normal;
   font-variation-settings:
     "wdth" 100;
+  user-zoom: none;
+  -webkit-user-drag: none;
+  background: #151417;
+  -webkit-user-drag: none;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .urbanist-bold {

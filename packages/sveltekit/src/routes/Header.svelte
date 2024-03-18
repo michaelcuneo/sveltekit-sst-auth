@@ -9,7 +9,7 @@
 </script>
 
 <header>
-	<a class="title" href="/">SvelteKit MagicLinks</a>
+	<a class="title" href="/">SvelteKit SST Auth</a>
 	<div>
 		<a class="urbanist-bold" href="/protected">PROTECTED</a>
 		{#if !data.authenticated}
@@ -20,7 +20,7 @@
 				<IconButton size="mini" class="material-icons">logout</IconButton>
 			</form>
 		{/if}
-		<a class="urbanist-bold" href="https://github.com/michaelcuneo/sveltekit-magiclinks"
+		<a class="urbanist-bold" href="https://github.com/michaelcuneo/sveltekit-auth"
 			><img src={Github} alt={Github} /></a
 		>
 		<a

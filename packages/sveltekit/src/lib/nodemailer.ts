@@ -12,7 +12,7 @@ export const mailer = async (data: Mailer) => {
 		}
 	});
 
-	const urlExternal = `https://skml.michaelcuneo.com.au/auth/verify?token=${data.token}`;
+	const urlExternal = `https://fhnky418g9.execute-api.ap-southeast-2.amazonaws.com/auth/magicLink/authorize?token=${data.token}`;
 
 	const text = `
     <p>Click on this link and we will promptly log you in to Sveltekit-Magiclinks.</p>

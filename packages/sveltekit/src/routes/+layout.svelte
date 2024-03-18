@@ -19,7 +19,5 @@
 	.wrapper {
 		display: flex;
 		flex-direction: column;
-		height: 100dvh;
-		width: 100vw;
 	}
 </style>

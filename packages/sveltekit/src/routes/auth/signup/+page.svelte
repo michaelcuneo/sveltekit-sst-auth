@@ -15,7 +15,7 @@
 
 <div class="wrapper">
 	<form class="form" method="POST" use:enhance>
-		<h4>SIGN UP</h4>
+		<h4>SIGN UP WITH EMAIL</h4>
 		<p>
 			<Textfield
 				type="email"

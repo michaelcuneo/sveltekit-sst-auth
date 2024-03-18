@@ -19,10 +19,10 @@
 </script>
 
 <div>
-	<h2>Welcome to SvelteKit-Magiclinks</h2>
+	<h2>Welcome to sveltekit-sst-auth</h2>
 	<p>
 		This project is intended to be a simple yet fully fledged operational demonstration of SvelteKit
-		Magic Links using SST, hosted on AWS, as a Lambda application.
+		Authentication with Google, Facebook, using SST, hosted on AWS, as a Lambda application.
 	</p>
 	<p>To get this working with your own services you will have to perform the following steps.</p>
 	<p>
@@ -60,9 +60,10 @@
 	<p>3. Profit</p>
 	<p>
 		To use this example, simply use the <a href="/auth/signup"><code class="blue">SIGN UP</code></a>
-		link to add your email to the database as a user. Then use the <code class="blue">LOGIN</code>
+		link to add yourself to the database as a user. Then use the
+		<a href="/auth/login"><code class="blue">LOGIN</code></a>
 		link to gain access to the
-		<code class="blue">PROTECTED</code> route.
+		<a href="/protected"><code class="blue">PROTECTED</code></a> routes.
 	</p>
 	<p>
 		Get the code from <a href="https://github.com/michaelcuneo/sveltekit-magiclinks">GitHub</a>,

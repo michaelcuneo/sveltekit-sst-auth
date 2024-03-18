@@ -1,5 +1,5 @@
 {
-	"name": "sveltekit",
+	"name": "@sveltekit-sst-auth/frontend",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -46,6 +46,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"nodemailer": "^6.9.11"
+		"electrodb": "^2.13.1",
+		"nodemailer": "^6.9.11",
+		"ulid": "^2.3.0"
 	}
 }

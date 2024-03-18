@@ -1,6 +1,6 @@
 {
-	"name": "sveltekit-magiclinks",
-	"version": "0.0.0",
+	"name": "sveltekit-sst-auth",
+	"version": "1.0.0",
 	"private": true,
 	"type": "module",
 	"scripts": {

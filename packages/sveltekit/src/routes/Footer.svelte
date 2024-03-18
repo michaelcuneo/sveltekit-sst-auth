@@ -1,10 +1,13 @@
 <footer class="urbanist-bold">
 	Developed by Michael Cuneo, 2024 | v1.0.0 |
-	<a class="urbanist-bold" href="/licence">&nbsp;LICENCE</a>
+	<a class="urbanist-bold" href="/licence">&nbsp;LICENCE |</a>
+	<a class="urbanist-bold" href="/tos">&nbsp;TOS |</a>
+	<a class="urbanist-bold" href="/privacy">&nbsp;PRIVACY</a>
 </footer>
 
 <style>
 	footer {
+		position: relative;
 		display: flex;
 		flex-direction: row;
 		background: #f7f1f1;

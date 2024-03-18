@@ -1,12 +1,17 @@
 import { StackContext, SvelteKitSite, Config, Table, Auth, Api } from 'sst/constructs';
 
 export function API({ stack }: StackContext) {
+	// App Secret
 	const JWT_SECRET = new Config.Secret(stack, 'JWT_SECRET');
+	// Node Mailer Email Config
 	const EMAIL_SERVICE = new Config.Secret(stack, 'EMAIL_SERVICE');
 	const EMAIL_HOST = new Config.Secret(stack, 'EMAIL_HOST');
 	const EMAIL_PORT = new Config.Secret(stack, 'EMAIL_PORT');
 	const EMAIL_USER = new Config.Secret(stack, 'EMAIL_USER');
 	const EMAIL_APP_PASS = new Config.Secret(stack, 'EMAIL_APP_PASS');
+	// Google Auth
+	const GOOGLE_CLIENT_ID = new Config.Secret(stack, 'GOOGLE_CLIENT_ID');
+	// Version
 	const VERSION = new Config.Parameter(stack, 'VERSION', {
 		value: '1.0.0'
 	});
@@ -33,17 +38,18 @@ export function API({ stack }: StackContext) {
 			'GET /': 'packages/functions/src/main.handler',
 			'GET /users': 'packages/functions/src/userList.handler',
 			'GET /user/getId/{id}': 'packages/functions/src/userById.handler',
-			'POST /user/add': 'packages/functions/src/userAdd.handler'
+			'POST /user/add': 'packages/functions/src/userCreate.handler'
 		}
 	});
 
 	const auth = new Auth(stack, 'Auth', {
-		authenticator: 'functions/src/authenticator.handler'
+		authenticator: {
+			bind: [GOOGLE_CLIENT_ID],
+			handler: 'packages/functions/src/authenticator.handler',
+		}
 	});
 
-	auth.attach(stack, {
-		api
-	});
+	auth.attach(stack, { api });
 
 	const site = new SvelteKitSite(stack, 'site', {
 		bind: [
@@ -58,7 +64,7 @@ export function API({ stack }: StackContext) {
 		],
 		path: 'packages/sveltekit/',
 		customDomain: {
-			domainName: 'skml.michaelcuneo.com.au',
+			domainName: 'skits.michaelcuneo.com.au',
 			hostedZone: 'michaelcuneo.com.au'
 		},
 		environment: {

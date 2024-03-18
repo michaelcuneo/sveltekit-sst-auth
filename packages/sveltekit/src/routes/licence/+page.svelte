@@ -34,11 +34,10 @@
 		align-items: center;
 		justify-content: center;
 		width: 100vw;
-		height: 100dvh;
+		height: 100%;
 	}
 	.licence {
-		min-width: 320px;
-		max-width: 800px;
+		width: 1000px;
 		background: #242424;
 		padding: 1rem;
 		border-radius: 10px;
