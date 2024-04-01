@@ -19,7 +19,7 @@
 {#if !form?.success}
 	<div transition:fade={{ delay: 0, duration: 300 }} class="wrapper">
 		<form class="form" method="POST" use:enhance>
-			<h4>LOGIN</h4>
+			<h4>LOGIN WITH EMAIL</h4>
 			<p>
 				<Textfield
 					type="email"

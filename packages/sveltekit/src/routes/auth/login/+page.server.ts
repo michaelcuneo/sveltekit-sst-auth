@@ -1,34 +1,32 @@
 import type { Actions } from './$types';
-import { mailer } from '$lib/nodemailer';
 import { fail } from '@sveltejs/kit';
 import { Config } from 'sst/node/config';
 import { USERS } from '$lib/constants';
+import { API_URL } from '$env/static/private';
+import { stringify } from 'uuid';
 
 export const actions = {
 	default: async ({ request }) => {
 		const formData: FormData = await request.formData();
 		const email: string | undefined = formData.get('email')?.toString();
 
-		const user = USERS.find((user) => user.email === email);
+		// Check to see if the user exists.
+		const url = API_URL + `/user/getUserByEmail/${email}`;
+		const user = await fetch(url)
+			.then((res) => res.body)
+			.then((res) => JSON.stringify(res));
 
-		if (user != null) {
-			try {
-				return mailer({
-					email: user.email,
-					service: Config.EMAIL_SERVICE,
-					host: Config.EMAIL_HOST,
-					port: Number(Config.EMAIL_PORT),
-					username: Config.EMAIL_USER,
-					password: Config.EMAIL_APP_PASS
-				});
-			} catch (err) {
-				if (typeof err === 'string') {
-					return fail(400, err);
-				} else if (err instanceof Error) {
-					return fail(400, err.message);
-				}
-			}
-		}
+		// If the user does exist... Hit the magicLink endpoint and redirect to the magicLink page.
+		// This will create and send a link to the user.
+
+		await fetch(API_URL + `/auth/magicLink/authorize?email=${email}`, {
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: 'POST',
+			body: JSON.stringify({})
+		});
 
 		return { success: true, error: null };
 	}

@@ -1,23 +1,3 @@
-<script lang="ts">
-	// Uncomment and run this to console log a key to place into .env as JWT_SECRET=""
-	/*
-	crypto.subtle
-		.generateKey(
-			{
-				name: 'HMAC',
-				hash: { name: 'SHA-256' }
-			},
-			true,
-			['sign', 'verify']
-		)
-		.then((key) => {
-			crypto.subtle.exportKey('jwk', key).then((exported) => {
-				console.log(exported.k);
-			});
-		});
-	*/
-</script>
-
 <div>
 	<h2>Welcome to sveltekit-sst-auth</h2>
 	<p>
@@ -41,19 +21,29 @@
 	</p>
 	<div class="code">
 		<ul>
+			<li><i>NODE_MAILER CONFIG FOR MAGIC LINKS</i></li>
+			<li class="blue"><code>EMAIL_SERVICE=<span class="orange">{`<Gmail>`}</span></code></li>
+			<li class="blue"><code>EMAIL_HOST=<span class="orange">{`<smtp.gmail.com>`}</span></code></li>
+			<li class="blue"><code>EMAIL_PORT=<span class="orange">{`<465>`}</span></code></li>
+			<li class="blue"><code>EMAIL_USER=<span class="orange">{`<user@gmail.com>`}</span></code></li>
 			<li class="blue">
-				<code>
-					JWT_SECRET=<span class="orange"
-						>"To generate this, uncomment the crypto key generator inside +page.svelte to
-						console.log a key"</span
-					>
-				</code>
+				<code>EMAIL_APP_PASS=<span class="orange">{`<abcd efgh ijkl mnop>`}</span></code>
 			</li>
-			<li class="blue"><code>EMAIL_SERVICE=<span class="orange">"Gmail"</span></code></li>
-			<li class="blue"><code>EMAIL_HOST=<span class="orange">"smtp.gmail.com"</span></code></li>
-			<li class="blue"><code>EMAIL_PORT=<span class="orange">"465"</span></code></li>
-			<li class="blue"><code>EMAIL_USER=<span class="orange">"user@gmail.com"</span></code></li>
-			<li class="blue"><code>EMAIL_APP_PASS=<span class="orange">"app password"</span></code></li>
+			<li><i>GOOGLE CONFIG FOR GOOGLE FEDERATED IDENTITY</i></li>
+			<li class="blue">
+				<code
+					>GOOGLE_CLIENT_ID=<span class="orange"
+						>{`<#####-#######.apps.googleusercontent.com>`}</span
+					></code
+				>
+			</li>
+			<li><i>META CONFIG FOR META FEDERATED IDENTITY</i></li>
+			<li class="blue">
+				<code
+					>FACEBOOK_APP_ID=<span class="orange">"#####-#######.apps.googleusercontent.com"</span
+					></code
+				>
+			</li>
 		</ul>
 	</div>
 	<p>2. Modify the <code class="blue">sst.config.ts</code> file to suit your own purposes.</p>

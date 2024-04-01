@@ -1,23 +1,24 @@
 import type { Actions } from './$types';
-import { validateEmail } from '$lib/auth';
-// import { env } from '$env/dynamic/private';
+import { API_URL } from '$env/static/private';
 
 export const actions = {
 	default: async ({ request }) => {
 		// Get the email from the form.
 		const formData = await request.formData();
+		const email = formData.get('email')?.toString() as string;
 
-		const user = {
-			id: crypto.randomUUID(),
-			email: formData.get('email')?.toString() as string
-		};
+		// Create the user.
+		const url = API_URL + `/user/postCreateUser`;
 
-		const valid = validateEmail(user.email);
+		await fetch(url, {
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: 'POST',
+			body: JSON.stringify(email)
+		}).then((res) => JSON.stringify(res));
 
-		if (valid.success) {
-			return { success: true };
-		} else {
-			return { success: false, error: { error: valid.error, message: valid.message } };
-		}
+		return { success: true };
 	}
 } satisfies Actions;

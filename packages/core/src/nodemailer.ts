@@ -1,22 +1,27 @@
 import nodemailer from 'nodemailer';
 
+import { Config } from 'sst/node/config';
+
+type Mailer = {
+	email: string;
+	authUrl: string;
+};
+
 export const mailer = async (data: Mailer) => {
 	const Transporter = nodemailer.createTransport({
-		service: data.service,
-		host: data.host,
-		port: data.port,
+		service: Config.EMAIL_SERVICE,
+		host: Config.EMAIL_HOST,
+		port: Number(Config.EMAIL_PORT),
 		secure: true,
 		auth: {
-			user: data.username,
-			pass: data.password
+			user: Config.EMAIL_USER,
+			pass: Config.EMAIL_APP_PASS
 		}
 	});
 
-	const urlExternal = `https://fhnky418g9.execute-api.ap-southeast-2.amazonaws.com/auth/magicLink/authorize?token=${data.token}`;
-
 	const text = `
     <p>Click on this link and we will promptly log you in to Sveltekit-Magiclinks.</p>
-    <a href=${urlExternal}>LOGIN</a>`;
+    <a href=${data.authUrl}>LOGIN</a>`;
 
 	const mailOptions = {
 		from: 'me@michaelcuneo.com.au',

@@ -1,27 +1,24 @@
-import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
-import { APIGatewayProxyHandlerV2 } from "aws-lambda";
-import { Table } from "sst/node/table";
-import { marshall } from "@aws-sdk/util-dynamodb";
-
-const dynamoDb = new DynamoDBClient({
-  region: "ap-southeast-2",
-});
+import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
+import { fromEmail } from '../../core/src/user';
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
-  const command = new GetItemCommand({
-    TableName: Table.Users.tableName,
-    Key: marshall(event),
-  });
+	if (event?.pathParameters?.id) {
+		let userId;
 
-  const results = await dynamoDb.send(command);
+		console.error(new Error(event?.pathParameters?.id));
 
-  return results.Item
-    ? {
-        statusCode: 200,
-        body: JSON.stringify({ message: "Successful" }),
-      }
-    : {
-        statusCode: 404,
-        body: JSON.stringify({ error: true }),
-      };
+		try {
+			userId = await fromEmail(event.pathParameters.id);
+
+			return {
+				statusCode: 200,
+				body: JSON.stringify(userId)
+			};
+		} catch (err) {
+			return {
+				statusCode: 500,
+				body: JSON.stringify(err)
+			};
+		}
+	}
 };

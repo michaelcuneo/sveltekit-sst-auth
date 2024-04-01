@@ -1,8 +1,6 @@
 import { StackContext, SvelteKitSite, Config, Table, Auth, Api } from 'sst/constructs';
 
 export function API({ stack }: StackContext) {
-	// App Secret
-	const JWT_SECRET = new Config.Secret(stack, 'JWT_SECRET');
 	// Node Mailer Email Config
 	const EMAIL_SERVICE = new Config.Secret(stack, 'EMAIL_SERVICE');
 	const EMAIL_HOST = new Config.Secret(stack, 'EMAIL_HOST');
@@ -21,7 +19,7 @@ export function API({ stack }: StackContext) {
 			id: 'string',
 			email: 'string'
 		},
-		primaryIndex: { partitionKey: 'id' }
+		primaryIndex: { partitionKey: 'id', sortKey: 'email' }
 	});
 
 	const api = new Api(stack, 'Api', {
@@ -31,37 +29,31 @@ export function API({ stack }: StackContext) {
 		},
 		defaults: {
 			function: {
-				bind: [table]
+				bind: [table, EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS]
 			}
 		},
 		routes: {
 			'GET /': 'packages/functions/src/main.handler',
-			'GET /users': 'packages/functions/src/userList.handler',
-			'GET /user/getId/{id}': 'packages/functions/src/userById.handler',
-			'POST /user/add': 'packages/functions/src/userCreate.handler'
+			'GET /users': 'packages/functions/src/users.handler',
+			'GET /user/getUserById/{id}': 'packages/functions/src/userById.handler',
+			'GET /user/getUserByEmail/{email}': 'packages/functions/src/userByEmail.handler',
+			'POST /user/postCreateUser': 'packages/functions/src/userCreate.handler'
 		}
 	});
+
+	api.attachPermissions('*');
 
 	const auth = new Auth(stack, 'Auth', {
 		authenticator: {
 			bind: [GOOGLE_CLIENT_ID],
-			handler: 'packages/functions/src/authenticator.handler',
+			handler: 'packages/functions/src/authenticator.handler'
 		}
 	});
 
 	auth.attach(stack, { api });
 
 	const site = new SvelteKitSite(stack, 'site', {
-		bind: [
-			api,
-			JWT_SECRET,
-			EMAIL_SERVICE,
-			EMAIL_HOST,
-			EMAIL_PORT,
-			EMAIL_USER,
-			EMAIL_APP_PASS,
-			VERSION
-		],
+		bind: [api, auth, EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS, VERSION],
 		path: 'packages/sveltekit/',
 		customDomain: {
 			domainName: 'skits.michaelcuneo.com.au',

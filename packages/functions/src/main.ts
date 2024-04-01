@@ -1,11 +1,11 @@
 import { ApiHandler } from 'sst/node/api';
 
 // Root test handler to ensure response is working.
-export const handler = ApiHandler(async (evt) => {
+export const handler = ApiHandler(async (evt, ctx) => {
 	try {
 		return {
 			statusCode: 200,
-			body: evt.requestContext.time
+			body: ctx.awsRequestId + ' ' + evt.requestContext.time
 		};
 	} catch (err) {
 		return {

@@ -1,33 +1,32 @@
 type Mailer = {
-  email: string,
-  token: string,
-  service: string,
-  host: string,
-  port: number,
-  username: string,
-  password: string,
-}
+	email: string;
+	service: string;
+	host: string;
+	port: number;
+	username: string;
+	password: string;
+};
 
 type User = {
-  id: string,
-  email: string,
+	id: string;
+	email: string;
 };
 
 type UserLookup = {
-  id: string,
-}
+	id: string;
+};
 
 type Session = {
-  id: string,
-  userId: string,
+	id: string;
+	userId: string;
 };
 
 type AppSyncEvent = {
-  info: {
-    fieldName: string;
-  };
-  arguments: {
-    user: User;
-    userId: string;
-  };
+	info: {
+		fieldName: string;
+	};
+	arguments: {
+		user: User;
+		userId: string;
+	};
 };
