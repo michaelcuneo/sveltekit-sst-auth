@@ -1,14 +1,14 @@
 import { SSTConfig } from "sst";
-import { API } from "./stacks/MyStack";
+import { SvelteKitSSTAuth } from "./stacks/MyStack";
 
 export default {
   config(_input) {
     return {
-      name: "sveltekit-magiclinks",
+      name: "sveltekit-sst-auth",
       region: "ap-southeast-2",
     };
   },
   stacks(app) {
-    app.stack(API);
+    app.stack(SvelteKitSSTAuth);
   }
 } satisfies SSTConfig;

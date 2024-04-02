@@ -1,24 +1,20 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
-import { fromEmail } from '../../core/src/user';
+import { fromId } from '@sveltekit-magiclinks/core/user';
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
-	if (event?.pathParameters?.id) {
-		let userId;
+	const { id } = JSON.parse(event?.pathParameters || '');
 
-		console.error(new Error(event?.pathParameters?.id));
+	try {
+		let user = await fromId(id);
 
-		try {
-			userId = await fromEmail(event.pathParameters.id);
-
-			return {
-				statusCode: 200,
-				body: JSON.stringify(userId)
-			};
-		} catch (err) {
-			return {
-				statusCode: 500,
-				body: JSON.stringify(err)
-			};
-		}
+		return {
+			statusCode: 200,
+			body: JSON.stringify(user),
+		};
+	} catch (err) {
+		return {
+			statusCode: 500,
+			body: JSON.stringify(err)
+		};
 	}
 };

@@ -1,6 +1,6 @@
 import { StackContext, SvelteKitSite, Config, Table, Auth, Api } from 'sst/constructs';
 
-export function API({ stack }: StackContext) {
+export function SvelteKitSSTAuth({ stack }: StackContext) {
 	// Node Mailer Email Config
 	const EMAIL_SERVICE = new Config.Secret(stack, 'EMAIL_SERVICE');
 	const EMAIL_HOST = new Config.Secret(stack, 'EMAIL_HOST');
@@ -19,7 +19,7 @@ export function API({ stack }: StackContext) {
 			id: 'string',
 			email: 'string'
 		},
-		primaryIndex: { partitionKey: 'id', sortKey: 'email' }
+		primaryIndex: { partitionKey: 'id', sortKey: "email" }
 	});
 
 	const api = new Api(stack, 'Api', {
@@ -29,7 +29,7 @@ export function API({ stack }: StackContext) {
 		},
 		defaults: {
 			function: {
-				bind: [table, EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS]
+				bind: [EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS]
 			}
 		},
 		routes: {

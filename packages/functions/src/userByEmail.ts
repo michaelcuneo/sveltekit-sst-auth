@@ -1,33 +1,15 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
-import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
-import { Table } from 'sst/node/table';
+import { fromEmail } from '@sveltekit-magiclinks/core/user';
 
 export const handler: APIGatewayProxyHandlerV2 = async event => {
-	if (!event?.pathParameters?.email)
-    return {};
-
-	const email = event.pathParameters.email;
+	const { email } = JSON.parse(event?.pathParameters || '');
 
 	try {
-		const client = new DynamoDBClient({});
-
-		const params = {
-			TableName: Table.Users.tableName,
-			KeyConditionExpression: 'email = :email',
-			ExpressionAttributeValues: {
-				':email': email
-			},
-			Key: {
-				userId: { S: event.pathParameters.email },
-				email: { S: email }
-			}
-		};
-
-		const data = await client.send(new GetItemCommand(params));
+		let user = await fromEmail(email);
 
 		return {
 			statusCode: 200,
-			body: JSON.stringify(email)
+			body: JSON.stringify(user),
 		};
 	} catch (err) {
 		return {

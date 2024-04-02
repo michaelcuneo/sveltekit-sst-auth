@@ -7,7 +7,9 @@
 	<p>To get this working with your own services you will have to perform the following steps.</p>
 	<p>
 		1. Run <code class="blue">npx sst secrets set [environment-variable] ["value"]</code> to add all
-		the following variables to the application. Replace the values with your email provider information.
+		the following variables to the application. Replace the values with your email provider information
+		if you want to run MagicLinks, or Replace the Google, and/or Facebook information if you want Federated
+		Identities.
 	</p>
 	<p>
 		<span class="italic"

@@ -1,30 +1,33 @@
-import { ulid } from 'ulid';
-import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
-import { PutCommand } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBClient, GetItemCommand, PutItemCommand } from '@aws-sdk/client-dynamodb';
+import { marshall } from '@aws-sdk/util-dynamodb';
 import { Table } from 'sst/node/table';
 
 const client = new DynamoDBClient({});
 
 export const fromId = async (id: string) => {
-	const response = await client.send(
-		new GetCommand({
-			TableName: Table.Users.tableName,
-			Key: {
-				userId: id
-			}
-		})
-	);
+	const params = {
+		TableName: Table.Users.tableName,
+		KeyConditionExpression: 'id = :id',
+		ExpressionAttributeValues: marshall({
+			':id': id
+		}),
+		Key: {
+			id: { S: id }
+		}
+	};
 
-	return JSON.stringify(response);
+	const data = await client.send(new GetItemCommand(params))
+
+	return JSON.stringify(data);
 };
 
 export const fromEmail = async (email: string) => {
 	const params = {
 		TableName: Table.Users.tableName,
 		KeyConditionExpression: 'email = :email',
-		ExpressionAttributeValues: {
+		ExpressionAttributeValues: marshall({
 			':email': email
-		},
+		}),
 		Key: {
 			email: { S: email }
 		}
@@ -32,20 +35,16 @@ export const fromEmail = async (email: string) => {
 
 	const data = await client.send(new GetItemCommand(params));
 
-	console.log(data);
-
 	return data;
 };
 
 export async function create(Item: any) {
-	const response = await client.send(
-		new PutCommand({
-			TableName: Table.Users.tableName,
-			Item
-		})
-	);
+	const params = {
+		TableName: Table.Users.tableName,
+		Item: marshall(Item)
+	}
 
-	console.log(response);
+	const data = await client.send(new PutItemCommand(params));
 
-	return response;
+	return data;
 }
