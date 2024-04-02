@@ -1,21 +1,23 @@
 import type { PageServerLoad } from './$types';
-import jwt from 'jsonwebtoken';
-import type { JwtPayload } from 'jsonwebtoken';
 import { fail, redirect } from '@sveltejs/kit';
-import { SESSION_COOKIE_NAME, USERS } from '$lib/constants.js';
+import { SESSION_COOKIE_NAME } from '$lib/constants.js';
 import { createSessionByEmail } from '$lib/auth';
-import { Config } from 'sst/node/config';
+
+const dummyUsers = [
+	{
+		id: '1',
+		email: 'YjWQI@example.com'
+	}
+];
 
 export const load: PageServerLoad = ({ cookies, url }) => {
 	const token: string = url.searchParams.get('token')?.toString() ?? '';
-	const secret: string = Config.JWT_SECRET;
 
 	if (token == '') {
 		redirect(303, '/');
 	}
 
-	const decodedToken = jwt.verify(token, secret) as JwtPayload;
-	const user = USERS.find((user) => user.email === decodedToken.email);
+	const user = dummyUsers.find((user) => user.email === decodedToken.email);
 
 	// Create a session and cookie!
 	if (user != null) {

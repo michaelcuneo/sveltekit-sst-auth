@@ -1,9 +1,15 @@
 import { get, writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
-import { USERS } from './constants';
 
 export const sessionStore: Writable<Session[]> = writable([]);
+
+const dummyUsers = [
+	{
+		id: '1',
+		email: 'YjWQI@example.com'
+	}
+];
 
 export const validateEmail = (email: string) => {
 	const emailRegex = /[-A-Za-z0-9_.%]+@[-A-Za-z0-9.%]+\.[A-Za-z]+/gm;
@@ -22,7 +28,7 @@ export const validateEmail = (email: string) => {
 };
 
 const createSessionById = (userId: string) => {
-	const users = USERS;
+	const users = dummyUsers;
 	const user = users.find((user: User) => user.id === userId);
 
 	if (!user) {
@@ -50,7 +56,7 @@ export const createSessionByEmail = (email: string) => {
 		throw new Error(emailValidationResult.message);
 	}
 
-	const currentUsers = USERS;
+	const currentUsers = dummyUsers;
 
 	const userFound = currentUsers.find((user) => {
 		return user.email === email;
@@ -71,7 +77,7 @@ export const validateSession = (id: string) => {
 		throw new Error('Session does not exist');
 	}
 
-	const users = USERS;
+	const users = dummyUsers;
 	const userResult = users.find((user) => user.id === sessionResult.userId);
 
 	if (!userResult) {
