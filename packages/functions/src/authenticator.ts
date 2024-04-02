@@ -1,8 +1,8 @@
 import { Config } from 'sst/node/config';
 import { AuthHandler, GoogleAdapter, LinkAdapter } from 'sst/node/auth';
-import { create, fromId } from '../../core/src/user';
+import { create, fromEmail } from '@sveltekit-magiclinks/core/user';
 import { Session } from 'sst/node/auth';
-import { mailer } from '../../core/src/nodemailer';
+import { mailer } from '@sveltekit-magiclinks/core/nodemailer';
 
 declare module 'sst/node/auth' {
 	export interface SessionTypes {
@@ -21,7 +21,7 @@ export const handler = AuthHandler({
 			mode: 'oidc',
 			clientID: Config.GOOGLE_CLIENT_ID,
 			onSuccess: async (response) => {
-				const exists = await fromId(response.claims().sub!);
+				const exists = await fromEmail(response.claims().email!);
 
 				if (!exists) {
 					await create(response.claims().email!);

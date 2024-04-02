@@ -1,14 +1,14 @@
-import { SSTConfig } from "sst";
-import { SvelteKitSSTAuth } from "./stacks/MyStack";
+import { SSTConfig } from 'sst';
+import { SvelteKitSSTAuth } from './stacks/SSSTAuthStack';
 
 export default {
-  config(_input) {
-    return {
-      name: "sveltekit-sst-auth",
-      region: "ap-southeast-2",
-    };
-  },
-  stacks(app) {
-    app.stack(SvelteKitSSTAuth);
-  }
+	config() {
+		return {
+			name: 'sveltekit-sst-auth',
+			region: 'ap-southeast-2'
+		};
+	},
+	stacks(app) {
+		app.stack(SvelteKitSSTAuth);
+	}
 } satisfies SSTConfig;

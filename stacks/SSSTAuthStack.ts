@@ -17,9 +17,10 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 	const table = new Table(stack, 'Users', {
 		fields: {
 			id: 'string',
-			email: 'string'
+			email: 'string',
+			validated: 'string'
 		},
-		primaryIndex: { partitionKey: 'id', sortKey: "email" }
+		primaryIndex: { partitionKey: 'email' }
 	});
 
 	const api = new Api(stack, 'Api', {
@@ -29,7 +30,7 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 		},
 		defaults: {
 			function: {
-				bind: [EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS]
+				bind: [table, EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS]
 			}
 		},
 		routes: {

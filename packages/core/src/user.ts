@@ -1,50 +1,39 @@
-import { DynamoDBClient, GetItemCommand, PutItemCommand } from '@aws-sdk/client-dynamodb';
-import { marshall } from '@aws-sdk/util-dynamodb';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 import { Table } from 'sst/node/table';
+import { randomUUID } from 'crypto';
 
-const client = new DynamoDBClient({});
-
-export const fromId = async (id: string) => {
-	const params = {
-		TableName: Table.Users.tableName,
-		KeyConditionExpression: 'id = :id',
-		ExpressionAttributeValues: marshall({
-			':id': id
-		}),
-		Key: {
-			id: { S: id }
-		}
-	};
-
-	const data = await client.send(new GetItemCommand(params))
-
-	return JSON.stringify(data);
-};
+const client = new DynamoDBClient();
+const documentClient = DynamoDBDocumentClient.from(client);
 
 export const fromEmail = async (email: string) => {
 	const params = {
 		TableName: Table.Users.tableName,
-		KeyConditionExpression: 'email = :email',
-		ExpressionAttributeValues: marshall({
-			':email': email
-		}),
 		Key: {
-			email: { S: email }
+			email: email
 		}
 	};
 
-	const data = await client.send(new GetItemCommand(params));
+	const data = await documentClient.send(new GetCommand(params));
 
-	return data;
+	// If data came back, and it contains Items, return the Items, otherwise NULL
+	return data && data.Item ? data.Item : JSON.stringify(undefined);
 };
 
-export async function create(Item: any) {
+export async function create(email: string) {
+	JSON.stringify(email);
+
 	const params = {
 		TableName: Table.Users.tableName,
-		Item: marshall(Item)
-	}
+		Item: {
+			id: randomUUID().toString(),
+			email: email,
+			verified: 'false'
+		}
+	};
 
-	const data = await client.send(new PutItemCommand(params));
+	const data = await documentClient.send(new PutCommand(params));
 
-	return data;
+	// If data came back, and it contains Attributes, return the Attributes, otherwise NULL
+	return data && data.Attributes ? data.Attributes : JSON.stringify(undefined);
 }

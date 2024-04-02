@@ -1,15 +1,15 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import { fromEmail } from '@sveltekit-magiclinks/core/user';
 
-export const handler: APIGatewayProxyHandlerV2 = async event => {
-	const { email } = JSON.parse(event?.pathParameters || '');
+export const handler: APIGatewayProxyHandlerV2 = async (event) => {
+	const email = event?.pathParameters?.email || '';
 
 	try {
-		let user = await fromEmail(email);
+		const user = await fromEmail(email);
 
 		return {
 			statusCode: 200,
-			body: JSON.stringify(user),
+			body: user ? JSON.stringify(user) : JSON.stringify("User doesn't exist")
 		};
 	} catch (err) {
 		return {

@@ -1,9 +1,5 @@
 import type { Actions } from './$types';
-import { fail } from '@sveltejs/kit';
-import { Config } from 'sst/node/config';
-import { USERS } from '$lib/constants';
 import { API_URL } from '$env/static/private';
-import { stringify } from 'uuid';
 
 export const actions = {
 	default: async ({ request }) => {
@@ -16,6 +12,8 @@ export const actions = {
 			.then((res) => res.body)
 			.then((res) => JSON.stringify(res));
 
+		if (!user) return { success: false, error: null };
+
 		// If the user does exist... Hit the magicLink endpoint and redirect to the magicLink page.
 		// This will create and send a link to the user.
 
@@ -24,8 +22,7 @@ export const actions = {
 				Accept: 'application/json',
 				'Content-Type': 'application/json'
 			},
-			method: 'POST',
-			body: JSON.stringify({})
+			method: 'POST'
 		});
 
 		return { success: true, error: null };

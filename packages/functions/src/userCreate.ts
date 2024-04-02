@@ -1,21 +1,15 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
-import { create } from '../../core/src/user';
-import { randomUUID } from 'crypto';
+import { create } from '@sveltekit-magiclinks/core/user';
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
-	const { email } = JSON.parse(event?.body || '');
+	const email = JSON.parse(event?.body || '');
 
 	try {
-		const item = {
-			userId: randomUUID().toString(),
-			email: email
-		};
-
-		let user = await create(item);
+		const user = await create(email);
 
 		return {
 			statusCode: 200,
-			body: JSON.stringify(user),
+			body: user ? JSON.stringify(user) : JSON.stringify('User not created')
 		};
 	} catch (err) {
 		return {

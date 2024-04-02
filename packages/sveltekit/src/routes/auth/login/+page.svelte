@@ -41,8 +41,7 @@
 			</p>
 		</form>
 	</div>
-{:else}
-	{form.error}
+{:else if form?.success}
 	<div transition:fade={{ delay: 0, duration: 300 }} class="wrapper">
 		An email has been sent to {value}, click on the link in the email to sign in.
 	</div>
