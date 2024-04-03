@@ -12,20 +12,11 @@
 			use our services. This information may include:
 		</p>
 		<ul>
-			<li>Name</li>
 			<li>Email address</li>
-			<li>Contact information</li>
-			<li>User preferences</li>
-			<li>Usage data</li>
-			<li>Cookies and usage data</li>
 		</ul>
 		<p>We use this information to:</p>
 		<ul>
-			<li>Provide and maintain our services</li>
-			<li>Personalize your experience</li>
-			<li>Communicate with you</li>
-			<li>Analyze usage and improve our services</li>
-			<li>Comply with legal obligations</li>
+			<li>Prove that SvelteKit SST Auth Works</li>
 		</ul>
 		<h3>2. Cookies and Tracking Technologies</h3>
 		<p>

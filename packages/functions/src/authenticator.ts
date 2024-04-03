@@ -1,15 +1,12 @@
 import { Config } from 'sst/node/config';
-import { AuthHandler, GoogleAdapter, LinkAdapter } from 'sst/node/auth';
+import { AuthHandler, FacebookAdapter, GoogleAdapter, LinkAdapter } from 'sst/node/auth';
 import { create, fromEmail } from '@sveltekit-magiclinks/core/user';
 import { Session } from 'sst/node/auth';
 import { mailer } from '@sveltekit-magiclinks/core/nodemailer';
 
 declare module 'sst/node/auth' {
 	export interface SessionTypes {
-		userId: {
-			userID: string;
-		};
-		emailId: {
+		user: {
 			emailId: string;
 		};
 	}
@@ -17,6 +14,28 @@ declare module 'sst/node/auth' {
 
 export const handler = AuthHandler({
 	providers: {
+		facebook: FacebookAdapter({
+			clientSecret: Config.FACEBOOK_APP_SECRET,
+			clientID: Config.FACEBOOK_APP_ID,
+			scope: 'openid email',
+			onSuccess: async (tokenset) => {
+				const claims = tokenset.claims();
+
+				const exists = await fromEmail(claims.email!);
+
+				if (!exists) {
+					await create(claims.email!);
+				}
+
+				return Session.cookie({
+					redirect: 'http://localhost:5173',
+					type: 'user',
+					properties: {
+						emailId: claims.email!
+					}
+				})
+			},		
+		}),
 		google: GoogleAdapter({
 			mode: 'oidc',
 			clientID: Config.GOOGLE_CLIENT_ID,
@@ -27,11 +46,14 @@ export const handler = AuthHandler({
 					await create(response.claims().email!);
 				}
 
-				return {
-					statusCode: 200,
-					body: 'Logged into Google successfully'
-				};
-			}
+				return Session.cookie({
+					redirect: 'http://localhost:5173',
+					type: 'user',
+					properties: {
+						emailId: response.claims().email!
+					}
+				});
+			},
 		}),
 		magicLink: LinkAdapter({
 			onLink: async (link, claims) => {
@@ -47,9 +69,9 @@ export const handler = AuthHandler({
 				};
 			},
 			onSuccess: async (claims) => {
-				return Session.parameter({
+				return Session.cookie({
 					redirect: 'http://localhost:5173',
-					type: 'emailId',
+					type: 'user',
 					properties: {
 						emailId: claims.email
 					}

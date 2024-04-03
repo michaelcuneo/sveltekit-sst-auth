@@ -16,6 +16,7 @@
 	},
 	"devDependencies": {
 		"@smui/button": "^7.0.0-beta.16",
+		"@smui/circular-progress": "^7.0.0-beta.18",
 		"@smui/form-field": "^7.0.0-beta.16",
 		"@smui/icon-button": "^7.0.0-beta.16",
 		"@smui/textfield": "^7.0.0-beta.16",

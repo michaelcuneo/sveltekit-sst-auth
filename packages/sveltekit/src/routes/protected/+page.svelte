@@ -1,8 +1,14 @@
 <script lang="ts">
-	import { USERS } from '$lib/constants';
 	import { onMount } from 'svelte';
 
-	const currentUsers = USERS;
+	const dummyUsers = [
+		{
+			id: '1',
+			email: 'YjWQI@example.com'
+		}
+	];
+
+	const currentUsers = dummyUsers;
 	let userFound: User | undefined;
 
 	onMount(() => {

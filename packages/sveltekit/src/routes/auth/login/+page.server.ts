@@ -2,7 +2,7 @@ import type { Actions } from './$types';
 import { API_URL } from '$env/static/private';
 
 export const actions = {
-	default: async ({ request }) => {
+	magicLinks: async ({ request }) => {
 		const formData: FormData = await request.formData();
 		const email: string | undefined = formData.get('email')?.toString();
 
@@ -16,7 +16,6 @@ export const actions = {
 
 		// If the user does exist... Hit the magicLink endpoint and redirect to the magicLink page.
 		// This will create and send a link to the user.
-
 		await fetch(API_URL + `/auth/magicLink/authorize?email=${email}`, {
 			headers: {
 				Accept: 'application/json',

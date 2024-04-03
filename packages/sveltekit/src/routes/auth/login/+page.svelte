@@ -1,9 +1,13 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import Button from '@smui/button';
 	import Textfield from '@smui/textfield';
+	import CircularProgress from '@smui/circular-progress';
+
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
+	import { PUBLIC_API_URL } from '$env/static/public';
+	import GoogleButton from './GoogleButton.svelte';
+	import FBLogin from '$lib/login_with_fb.png';
 
 	let dirty: boolean;
 	let invalid: boolean;
@@ -16,9 +20,22 @@
 	export let form: ActionData;
 </script>
 
+<CircularProgress style="height: 32px; width: 32px;" indeterminate />
 {#if !form?.success}
-	<div transition:fade={{ delay: 0, duration: 300 }} class="wrapper">
-		<form class="form" method="POST" use:enhance>
+	<div class="wrapper">
+		<a class="form" href={PUBLIC_API_URL + `/auth/facebook/authorize`}>
+			<img src={FBLogin} alt="Login with Facebook" />
+		</a>
+		<a class="form" href={PUBLIC_API_URL + `/auth/google/authorize`}>
+			<GoogleButton />
+		</a>
+		<form
+			on:submit={() => (logging = true)}
+			class="form"
+			method="POST"
+			action="?/magicLinks"
+			use:enhance
+		>
 			<h4>LOGIN WITH EMAIL</h4>
 			<p>
 				<Textfield
@@ -42,7 +59,7 @@
 		</form>
 	</div>
 {:else if form?.success}
-	<div transition:fade={{ delay: 0, duration: 300 }} class="wrapper">
+	<div class="wrapper">
 		An email has been sent to {value}, click on the link in the email to sign in.
 	</div>
 {/if}
@@ -50,6 +67,7 @@
 <style>
 	.wrapper {
 		display: flex;
+		flex-direction: column;
 		width: 100vw;
 		height: 100dvh;
 		align-items: center;
@@ -60,7 +78,8 @@
 		flex-direction: column;
 		width: 300px;
 		background: #242424;
-		padding: 1rem;
+		padding: 0.8rem;
+		margin: 0.8rem;
 		border-radius: 10px;
 	}
 	p {

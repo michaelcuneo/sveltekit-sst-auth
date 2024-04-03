@@ -9,6 +9,9 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 	const EMAIL_APP_PASS = new Config.Secret(stack, 'EMAIL_APP_PASS');
 	// Google Auth
 	const GOOGLE_CLIENT_ID = new Config.Secret(stack, 'GOOGLE_CLIENT_ID');
+	// Facebook Auth
+	const FACEBOOK_APP_ID = new Config.Secret(stack, 'FACEBOOK_APP_ID');
+	const FACEBOOK_APP_SECRET = new Config.Secret(stack, 'FACEBOOK_APP_SECRET');
 	// Version
 	const VERSION = new Config.Parameter(stack, 'VERSION', {
 		value: '1.0.0'
@@ -25,18 +28,28 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 
 	const api = new Api(stack, 'Api', {
 		cors: {
-			allowMethods: ['ANY'],
-			allowHeaders: ['Authorization']
+			allowCredentials: true,
+			allowHeaders: ["content-type"],
+			allowMethods: ["ANY"],
+			allowOrigins: ["http://localhost:3000", "https://skits.michaelcuneo.com.au"],
 		},
 		defaults: {
 			function: {
-				bind: [table, EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS]
+				bind: [
+					table,
+					EMAIL_SERVICE,
+					EMAIL_HOST,
+					EMAIL_PORT,
+					EMAIL_USER,
+					EMAIL_APP_PASS,
+					FACEBOOK_APP_ID,
+					FACEBOOK_APP_SECRET,
+					GOOGLE_CLIENT_ID
+				],
 			}
 		},
 		routes: {
 			'GET /': 'packages/functions/src/main.handler',
-			'GET /users': 'packages/functions/src/users.handler',
-			'GET /user/getUserById/{id}': 'packages/functions/src/userById.handler',
 			'GET /user/getUserByEmail/{email}': 'packages/functions/src/userByEmail.handler',
 			'POST /user/postCreateUser': 'packages/functions/src/userCreate.handler'
 		}
@@ -54,14 +67,15 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 	auth.attach(stack, { api });
 
 	const site = new SvelteKitSite(stack, 'site', {
-		bind: [api, auth, EMAIL_SERVICE, EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_APP_PASS, VERSION],
+		bind: [api, auth, VERSION],
 		path: 'packages/sveltekit/',
 		customDomain: {
 			domainName: 'skits.michaelcuneo.com.au',
 			hostedZone: 'michaelcuneo.com.au'
 		},
 		environment: {
-			API_URL: api.url
+			API_URL: api.url,
+			PUBLIC_API_URL: api.url
 		},
 		edge: false
 	});
