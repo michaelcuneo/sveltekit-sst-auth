@@ -10,15 +10,12 @@ export const handle: Handle = async ({ event, resolve }) => {
       const sessionValidationResult = validateSession(sessionCookie);
 
       event.locals.session = sessionValidationResult.sessionResult;
-      event.locals.user = sessionValidationResult.userResult;
     } catch (error) {
       event.cookies.delete(SESSION_COOKIE_NAME, { path: '/' });
       event.locals.session = undefined;
-      event.locals.user = undefined;
     }
   } else {
     event.locals.session = undefined;
-    event.locals.user = undefined;
   }
 
   const response = resolve(event);

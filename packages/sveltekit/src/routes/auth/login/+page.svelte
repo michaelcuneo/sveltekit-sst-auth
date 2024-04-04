@@ -7,6 +7,7 @@
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import GoogleButton from './GoogleButton.svelte';
 	import FBLogin from '$lib/images/login_with_fb.png';
+	import GithubButton from './GithubButton.svelte';
 
 	let dirty: boolean;
 	let invalid: boolean;
@@ -35,6 +36,11 @@
 		<a class="form" href={PUBLIC_API_URL + `/auth/google/authorize`}>
 			<GoogleButton />
 		</a>
+		<!--
+		<a class="form" href={PUBLIC_API_URL + `/auth/github/authorize`}>
+			<GithubButton />
+		</a>
+		-->
 		<form class="form" method="POST" action="?/magicLinks" use:enhance={onSubmit}>
 			<h4>LOGIN WITH EMAIL</h4>
 			<p>

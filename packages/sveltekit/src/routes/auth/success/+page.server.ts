@@ -16,20 +16,4 @@ export const load: PageServerLoad = ({ cookies, url }) => {
   const sessionCreate = createSessionById(user.userId);
   cookies.set(SESSION_COOKIE_NAME, sessionCreate.id, { maxAge: 24 * 60 * 60, path: '/' });
   redirect(303, '/');
-  /*
-    if (error instanceof Error) {
-      return fail(500, {
-        userId: user.userId,
-        message: error.message
-      });
-    } else {
-      return fail(500, {
-        userId: user.userId,
-        message: 'Unknown error occured on the server.'
-      });
-    }
-  }
-  */
-
-  return { user }
 };

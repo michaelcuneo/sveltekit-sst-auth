@@ -1,9 +1,3 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-
-	export let data;
-</script>
-
 <div class="wrapper">
 	<h4>THIS IS A PROTECTED LINK</h4>
 	<p>You are logged in.</p>
