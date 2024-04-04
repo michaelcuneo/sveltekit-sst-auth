@@ -1,5 +1,5 @@
 import { SSTConfig } from 'sst';
-import { SvelteKitSSTAuth } from './stacks/SSSTAuthStack';
+import { SvelteKitSSTAuth } from './stacks/SSTAuthStack';
 
 export default {
 	config() {

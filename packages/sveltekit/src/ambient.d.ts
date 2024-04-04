@@ -12,6 +12,12 @@ type User = {
 	email: string;
 };
 
+type UserToken = {
+	userId: string;
+	iat: number;
+	exp: number;
+}
+
 type UserLookup = {
 	id: string;
 };

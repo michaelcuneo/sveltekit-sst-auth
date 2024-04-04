@@ -20,13 +20,13 @@ export const mailer = async (data: Mailer) => {
 	});
 
 	const text = `
-    <p>Click on this link and we will promptly log you in to Sveltekit-Magiclinks.</p>
+    <p>Click on this link and we will promptly log you in to ${Config.PROJECT_NAME}</p>
     <a href=${data.authUrl}>LOGIN</a>`;
 
 	const mailOptions = {
-		from: 'me@michaelcuneo.com.au',
+		from: Config.EMAIL_USER,
 		to: data.email,
-		subject: 'Hello, here is your Login Link for Sveltekit-Magiclinks',
+		subject: `Hello, here is your Login Link for ${Config.PROJECT_NAME}`,
 		html: text
 	};
 

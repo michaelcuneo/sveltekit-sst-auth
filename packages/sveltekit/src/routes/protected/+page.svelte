@@ -1,28 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	const dummyUsers = [
-		{
-			id: '1',
-			email: 'YjWQI@example.com'
-		}
-	];
-
-	const currentUsers = dummyUsers;
-	let userFound: User | undefined;
-
-	onMount(() => {
-		userFound = currentUsers.find((user) => {
-			return user.id === data.id;
-		});
-	});
-
 	export let data;
 </script>
 
 <div class="wrapper">
 	<h4>THIS IS A PROTECTED LINK</h4>
-	<p>You are logged in as {userFound?.email}</p>
+	<p>You are logged in.</p>
 </div>
 
 <style>

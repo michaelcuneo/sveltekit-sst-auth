@@ -1,0 +1,1 @@
+npx sst secrets set [environment-variable] ["value"]

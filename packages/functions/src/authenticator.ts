@@ -1,8 +1,9 @@
 import { Config } from 'sst/node/config';
 import { AuthHandler, FacebookAdapter, GoogleAdapter, LinkAdapter } from 'sst/node/auth';
 import { create, fromEmail } from '@sveltekit-magiclinks/core/user';
-import { Session } from 'sst/node/auth';
 import { mailer } from '@sveltekit-magiclinks/core/nodemailer';
+import { Session } from 'sst/node/auth';
+import jwt from 'jsonwebtoken';
 
 declare module 'sst/node/auth' {
 	export interface SessionTypes {
@@ -15,7 +16,6 @@ declare module 'sst/node/auth' {
 export type User = {
 	id: string;
 	email: string;
-	validated: string;
 };
 
 export const handler = AuthHandler({
@@ -26,26 +26,26 @@ export const handler = AuthHandler({
 			scope: 'openid email',
 			onSuccess: async (tokenset) => {
 				const claims = tokenset.claims();
-				console.log(claims);
-
 				const user: User = (await fromEmail(claims.email!)) as User;
-				console.log(user);
-
 				let newUser: User | undefined = undefined;
 
 				if (user === undefined) {
 					newUser = (await create(claims.email!)) as User;
 				}
+				const token = jwt.sign({ userId: user ? user.id : (newUser?.id as string) }, Config.JWT_SECRET, { expiresIn: '1m' });
 
-				console.log(newUser!);
-
-				return Session.cookie({
-					redirect: 'https://localhost:3000',
-					type: 'user',
-					properties: {
-						userId: user ? user.id : (newUser?.id as string)
-					}
-				});
+				return {
+					statusCode: 302,
+					headers: {
+						Location: process.env.IS_LOCAL ? Config.DEV_DOMAIN_NAME + `/auth/success?token=${token}` : Config.PROD_DOMAIN_NAME + `/auth/validate?token=${token}`
+					},
+					body: JSON.stringify({
+						type: 'user',
+						properties: {
+							userId: user ? user.id : (newUser?.id as string)
+						}
+					})
+				};
 			}
 		}),
 		google: GoogleAdapter({
@@ -53,19 +53,27 @@ export const handler = AuthHandler({
 			clientID: Config.GOOGLE_CLIENT_ID,
 			onSuccess: async (response) => {
 				const claims = response.claims();
-				const exists = await fromEmail(claims.email!);
+				const user: User = (await fromEmail(claims.email!)) as User;
+				let newUser: User | undefined = undefined;
 
-				if (!exists) {
-					await create(claims.email!);
+				if (user === undefined) {
+					newUser = (await create(claims.email!)) as User;
 				}
 
-				return Session.cookie({
-					redirect: 'https://localhost:3000',
-					type: 'user',
-					properties: {
-						emailId: response.claims().email!
-					}
-				});
+				const token = jwt.sign({ userId: user ? user.id : (newUser?.id as string) }, Config.JWT_SECRET, { expiresIn: '1m' });
+
+				return {
+					statusCode: 302,
+					headers: {
+						Location: process.env.IS_LOCAL ? Config.DEV_DOMAIN_NAME + `/auth/success?token=${token}` : Config.PROD_DOMAIN_NAME + `/auth/validate?token=${token}`
+					},
+					body: JSON.stringify({
+						type: 'user',
+						properties: {
+							userId: user ? user.id : (newUser?.id as string)
+						}
+					})
+				};
 			}
 		}),
 		magicLink: LinkAdapter({
@@ -82,20 +90,27 @@ export const handler = AuthHandler({
 				};
 			},
 			onSuccess: async (response) => {
-				const claims = response.claims();
-				const exists = await fromEmail(claims.email!);
+				const user: User = await fromEmail(response.email!) as User;
+				let newUser: User | undefined = undefined;
 
-				if (!exists) {
-					await create(claims.email!);
+				if (user === undefined) {
+					newUser = (await create(response.email!)) as User;
 				}
 
-				return Session.cookie({
-					redirect: 'https://localhost:3000',
-					type: 'user',
-					properties: {
-						emailId: claims.email
-					}
-				});
+				const token = jwt.sign({ userId: user ? user.id : (newUser?.id as string) }, Config.JWT_SECRET, { expiresIn: '1m' });
+
+				return {
+					statusCode: 302,
+					headers: {
+						Location: process.env.IS_LOCAL ? Config.DEV_DOMAIN_NAME + `/auth/success?token=${token}` : Config.PROD_DOMAIN_NAME + `/auth/validate?token=${token}`
+					},
+					body: JSON.stringify({
+						type: 'user',
+						properties: {
+							userId: user ? user.id : (newUser?.id as string)
+						}
+					})
+				};
 			},
 			onError: async () => {
 				return {

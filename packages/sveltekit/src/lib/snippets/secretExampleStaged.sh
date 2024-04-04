@@ -1,0 +1,1 @@
+npx sst secrets --stage production set EMAIL_SERVICE "Gmail"

@@ -6,7 +6,7 @@
 	import type { ActionData } from './$types';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import GoogleButton from './GoogleButton.svelte';
-	import FBLogin from '$lib/login_with_fb.png';
+	import FBLogin from '$lib/images/login_with_fb.png';
 
 	let dirty: boolean;
 	let invalid: boolean;
@@ -14,11 +14,11 @@
 	let value: string = '';
 	let submitted = false;
 
-	$: disabled = focused || !value || !dirty || invalid;
-
-	const handleSubmit = () => {
+	const onSubmit = () => {
 		submitted = true;
 	};
+
+	$: disabled = focused || !value || !dirty || invalid;
 
 	/** @type {import('./$types').ActionData} */
 	export let form: ActionData;
@@ -35,7 +35,7 @@
 		<a class="form" href={PUBLIC_API_URL + `/auth/google/authorize`}>
 			<GoogleButton />
 		</a>
-		<form class="form" method="POST" action="?/magicLinks" on:submit={handleSubmit} use:enhance>
+		<form class="form" method="POST" action="?/magicLinks" use:enhance={onSubmit}>
 			<h4>LOGIN WITH EMAIL</h4>
 			<p>
 				<Textfield
@@ -60,7 +60,9 @@
 	</div>
 {:else if form?.success}
 	<div class="wrapper">
-		An email has been sent to {value}, click on the link in the email to sign in.
+		<h3>
+			An email has been sent to {value}, click on the link in the email to sign in.
+		</h3>
 	</div>
 {/if}
 

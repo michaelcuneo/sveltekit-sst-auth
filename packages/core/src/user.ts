@@ -21,19 +21,28 @@ export const fromEmail = async (email: string) => {
 };
 
 export async function create(email: string) {
-	JSON.stringify(email);
-
 	const params = {
 		TableName: Table.Users.tableName,
 		Item: {
 			id: randomUUID().toString(),
 			email: email,
-			verified: 'false'
 		}
 	};
 
 	const data = await documentClient.send(new PutCommand(params));
 
-	// If data came back, and it contains Attributes, return the Attributes, otherwise NULL
-	return data && data.Attributes ? data.Attributes : JSON.stringify(undefined);
+	if (data.$metadata.httpStatusCode === 200) {
+		const params = {
+			TableName: Table.Users.tableName,
+			Key: {
+				email: email
+			}
+		}
+
+		const user = await documentClient.send(new GetCommand(params));
+
+		return user && user.Item ? user.Item : JSON.stringify(undefined);
+	} else {
+		return JSON.stringify(undefined);
+	}
 }

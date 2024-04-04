@@ -2,8 +2,8 @@
 	import IconButton from '@smui/icon-button';
 	import { enhance } from '$app/forms';
 	import type { PageData } from './$types';
-	import Github from '$lib/github-mark-white.svg';
-	import Slack from '$lib/slack_icon_2019.svg';
+	import Github from '$lib/images/github-mark-white.svg';
+	import Slack from '$lib/images/slack_icon_2019.svg';
 
 	export let data: PageData;
 </script>
@@ -11,6 +11,7 @@
 <header>
 	<a class="title" href="/">SvelteKit SST Auth</a>
 	<div>
+		<a class="urbanist-bold" href="/setup">SETUP</a>
 		<a class="urbanist-bold" href="/protected">PROTECTED</a>
 		{#if !data.authenticated}
 			<a class="urbanist-bold" href="/auth/login">LOGIN</a>
