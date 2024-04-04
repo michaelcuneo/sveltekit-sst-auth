@@ -29,9 +29,9 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 	const api = new Api(stack, 'Api', {
 		cors: {
 			allowCredentials: true,
-			allowHeaders: ["content-type"],
-			allowMethods: ["ANY"],
-			allowOrigins: ["http://localhost:3000", "https://skits.michaelcuneo.com.au"],
+			allowHeaders: ['content-type'],
+			allowMethods: ['ANY'],
+			allowOrigins: ['https://localhost:3000', 'https://skits.michaelcuneo.com.au']
 		},
 		defaults: {
 			function: {
@@ -45,7 +45,7 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 					FACEBOOK_APP_ID,
 					FACEBOOK_APP_SECRET,
 					GOOGLE_CLIENT_ID
-				],
+				]
 			}
 		},
 		routes: {

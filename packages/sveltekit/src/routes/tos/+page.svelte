@@ -61,9 +61,9 @@
 	.wrapper {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		width: 100vw;
-		height: 100%;
+		min-height: 100dvh;
+		max-width: 65rem;
+		padding: 3rem 0 3rem 0;
 	}
 	.licence {
 		width: 1000px;

@@ -13,7 +13,6 @@
 	<div>
 		<a class="urbanist-bold" href="/protected">PROTECTED</a>
 		{#if !data.authenticated}
-			<a class="urbanist-bold" href="/auth/signup">SIGN UP</a>
 			<a class="urbanist-bold" href="/auth/login">LOGIN</a>
 		{:else}
 			<form action="/auth/logout" method="POST" use:enhance>
@@ -37,6 +36,7 @@
 		align-items: center;
 		background: #fb5e5e;
 		padding: 1rem;
+		width: 100%;
 		height: 60px;
 	}
 	a {

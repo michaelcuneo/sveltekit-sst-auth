@@ -1,24 +1,20 @@
-import { signOut } from '$lib/auth.js';
 import { SESSION_COOKIE_NAME } from '$lib/constants.js';
-import type { Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export const actions = {
+export const load: PageServerLoad = async () => {
+	throw redirect(302, '/');
+};
+
+export const actions: Actions = {
 	default: async ({ cookies }) => {
-		const sessionId = cookies.get(SESSION_COOKIE_NAME);
-
-		if (!sessionId) {
-			return {};
-		}
-
 		try {
-			signOut(sessionId);
-			cookies.delete(SESSION_COOKIE_NAME, { path: '/' });
+			cookies.set(SESSION_COOKIE_NAME, '', { path: '/', expires: new Date(0) });
 		} catch (error) {
 			if (error instanceof Error) {
 				return { message: error.message };
 			}
 		}
-
-		return {};
+		throw redirect(302, '/');
 	}
-} satisfies Actions;
+};

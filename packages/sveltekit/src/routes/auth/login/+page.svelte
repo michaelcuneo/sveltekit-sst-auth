@@ -2,7 +2,6 @@
 	import Button from '@smui/button';
 	import Textfield from '@smui/textfield';
 	import CircularProgress from '@smui/circular-progress';
-
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 	import { PUBLIC_API_URL } from '$env/static/public';
@@ -13,15 +12,22 @@
 	let invalid: boolean;
 	let focused: boolean;
 	let value: string = '';
+	let submitted = false;
 
 	$: disabled = focused || !value || !dirty || invalid;
+
+	const handleSubmit = () => {
+		submitted = true;
+	};
 
 	/** @type {import('./$types').ActionData} */
 	export let form: ActionData;
 </script>
 
-<CircularProgress style="height: 32px; width: 32px;" indeterminate />
-{#if !form?.success}
+{#if submitted && !form?.success}
+	<CircularProgress style="height: 32px; width: 32px;" indeterminate />
+{/if}
+{#if !submitted && !form?.success}
 	<div class="wrapper">
 		<a class="form" href={PUBLIC_API_URL + `/auth/facebook/authorize`}>
 			<img src={FBLogin} alt="Login with Facebook" />
@@ -29,13 +35,7 @@
 		<a class="form" href={PUBLIC_API_URL + `/auth/google/authorize`}>
 			<GoogleButton />
 		</a>
-		<form
-			on:submit={() => (logging = true)}
-			class="form"
-			method="POST"
-			action="?/magicLinks"
-			use:enhance
-		>
+		<form class="form" method="POST" action="?/magicLinks" on:submit={handleSubmit} use:enhance>
 			<h4>LOGIN WITH EMAIL</h4>
 			<p>
 				<Textfield
@@ -68,10 +68,9 @@
 	.wrapper {
 		display: flex;
 		flex-direction: column;
-		width: 100vw;
-		height: 100dvh;
-		align-items: center;
-		justify-content: center;
+		min-height: 100dvh;
+		max-width: 65rem;
+		padding: 3rem 0 3rem 0;
 	}
 	.form {
 		display: flex;

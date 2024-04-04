@@ -1,59 +1,63 @@
 body {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100dvh;
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-  user-zoom: none;
-  -webkit-user-drag: none;
-  background: #151417;
-  -webkit-user-drag: none;
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	min-height: 100dvh;
+	font-family: 'Open Sans', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 300;
+	font-style: normal;
+	font-variation-settings: 'wdth' 100;
+	user-zoom: none;
+	-webkit-user-drag: none;
+	background: #151417;
+	overflow: scroll;
+	-webkit-user-drag: none;
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
 }
 
 ::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 .urbanist-bold {
-  font-family: "Urbanist", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
+	font-family: 'Urbanist', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: normal;
 }
 
 .open-sans-regular {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+	font-family: 'Open Sans', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings: 'wdth' 100;
 }
 
 .lobster-regular {
-  font-family: "Lobster", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+	font-family: 'Lobster', sans-serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Urbanist", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Urbanist', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
 }
 
 code {
-  font-family: "Fira Code", monospace;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
+	font-family: 'Fira Code', monospace;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
 }

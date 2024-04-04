@@ -29,10 +29,9 @@
 	.wrapper {
 		display: flex;
 		flex-direction: column;
-		width: 100vw;
-		height: 100dvh;
-		align-items: center;
-		justify-content: center;
+		min-height: 100dvh;
+		max-width: 65rem;
+		padding: 3rem 0 3rem 0;
 	}
 	h4 {
 		line-height: 0.4rem;
