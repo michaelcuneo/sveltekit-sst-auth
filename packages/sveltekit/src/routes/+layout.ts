@@ -1,15 +1,15 @@
-import type { LayoutLoad } from "./$types";
+import type { LayoutLoad } from './$types';
 
 export const load = (async ({ fetch }) => {
-  const result = await fetch("/api/validate-user");
+	const result = await fetch('/api/validate-user');
 
-  const parsedResult = await result.json();
+	const parsedResult = await result.json();
 
-  let { authenticated } = parsedResult;
+	const { authenticated } = parsedResult;
 
-  if (authenticated !== undefined && typeof authenticated === "boolean") {
-    return { authenticated };
-  }
+	if (authenticated !== undefined && typeof authenticated === 'boolean') {
+		return { authenticated };
+	}
 
-  return { authenticated: false };
+	return { authenticated: false };
 }) satisfies LayoutLoad;

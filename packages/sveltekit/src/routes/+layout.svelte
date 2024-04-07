@@ -4,6 +4,8 @@
 	import type { PageData } from './$types';
 
 	import 'sanitize.css';
+	import 'sanitize.css/forms.css';
+	import 'sanitize.css/typography.css';
 	import './style.css';
 
 	export let data: PageData;

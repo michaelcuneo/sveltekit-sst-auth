@@ -1,66 +1,64 @@
 import { StackContext, SvelteKitSite, Config, Table, Auth, Api } from 'sst/constructs';
 
-export function SvelteKitSSTAuth({ stack }: StackContext) {
-
-	// PARAMETERS - Edit these to suit your project.
-	const PROJECT_NAME = new Config.Parameter(stack, 'PROJECT_NAME', {
-		value: 'SvelteKit SST Auth',
-	})
-	const DEV_DOMAIN_NAME = new Config.Parameter(stack, 'DEV_DOMAIN_NAME', {
-		value: '192.168.0.10:3000',
+/**
+ * The SSTAuthStack function is the main entry point of the serverless stack.
+ * It sets up the serverless stack, including the necessary resources like tables, secrets, api, and site.
+ *
+ * @param {StackContext} stack - The stack context object.
+ */
+export function SSTAuthStack({ stack }: StackContext) {
+	// Define project parameters
+	const projectName = new Config.Parameter(stack, 'ProjectName', {
+		value: 'SvelteKit SST Auth'
 	});
-	const PROD_DOMAIN_NAME = new Config.Parameter(stack, 'PROD_DOMAIN_NAME', {
-		value: 'skits.michaelcuneo.com.au',
+	const devDomainName = new Config.Parameter(stack, 'DevDomainName', {
+		value: 'localhost:3000'
 	});
-	const VERSION = new Config.Parameter(stack, 'VERSION', {
+	const prodDomainName = new Config.Parameter(stack, 'ProdDomainName', {
+		value: 'skits.michaelcuneo.com.au'
+	});
+	const version = new Config.Parameter(stack, 'Version', {
 		value: '1.0.0'
 	});
 
-	// SECRETS - Edit these to suit your project.
-	// Node Mailer Email Config
-	const EMAIL_SERVICE = new Config.Secret(stack, 'EMAIL_SERVICE');
-	const EMAIL_HOST = new Config.Secret(stack, 'EMAIL_HOST');
-	const EMAIL_PORT = new Config.Secret(stack, 'EMAIL_PORT');
-	const EMAIL_USER = new Config.Secret(stack, 'EMAIL_USER');
-	const EMAIL_APP_PASS = new Config.Secret(stack, 'EMAIL_APP_PASS');
-	// Google Auth
-	const GOOGLE_CLIENT_ID = new Config.Secret(stack, 'GOOGLE_CLIENT_ID');
-	// Facebook Auth
-	const FACEBOOK_APP_ID = new Config.Secret(stack, 'FACEBOOK_APP_ID');
-	const FACEBOOK_APP_SECRET = new Config.Secret(stack, 'FACEBOOK_APP_SECRET');
-	// JWT Secret
-	const JWT_SECRET = new Config.Secret(stack, 'JWT_SECRET');
+	// Define email and authentication secrets
+	const emailService = new Config.Secret(stack, 'EmailService');
+	const emailHost = new Config.Secret(stack, 'EmailHost');
+	const emailPort = new Config.Secret(stack, 'EmailPort');
+	const emailUser = new Config.Secret(stack, 'EmailUser');
+	const emailAppPass = new Config.Secret(stack, 'EmailAppPass');
+	const googleClientId = new Config.Secret(stack, 'GoogleClientId');
+	const facebookAppId = new Config.Secret(stack, 'FacebookAppId');
+	const facebookAppSecret = new Config.Secret(stack, 'FacebookAppSecret');
+	const jwtSecret = new Config.Secret(stack, 'JwtSecret');
 
-	// TABLES
-	const table = new Table(stack, 'Users', {
-		fields: {
-			id: 'string',
-			email: 'string',
-		},
+	// Define users table
+	const usersTable = new Table(stack, 'Users', {
+		fields: { id: 'string', email: 'string' },
 		primaryIndex: { partitionKey: 'email' }
 	});
 
-	// API
+	// Define api
 	const api = new Api(stack, 'Api', {
 		cors: {
 			allowCredentials: true,
 			allowHeaders: ['content-type'],
 			allowMethods: ['ANY'],
-			allowOrigins: ['https://192.168.0.10:3000', 'https://skits.michaelcuneo.com.au']
+			allowOrigins: ['https://localhost:3000', 'https://skits.michaelcuneo.com.au']
 		},
 		defaults: {
 			function: {
 				bind: [
-					table,
-					PROJECT_NAME,
-					EMAIL_SERVICE,
-					EMAIL_HOST,
-					EMAIL_PORT,
-					EMAIL_USER,
-					EMAIL_APP_PASS,
-					FACEBOOK_APP_ID,
-					FACEBOOK_APP_SECRET,
-					GOOGLE_CLIENT_ID
+					usersTable,
+					projectName,
+					emailService,
+					emailHost,
+					emailPort,
+					emailUser,
+					emailAppPass,
+					facebookAppId,
+					facebookAppSecret,
+					googleClientId
 				]
 			}
 		},
@@ -71,37 +69,33 @@ export function SvelteKitSSTAuth({ stack }: StackContext) {
 		}
 	});
 
-	// API PERMISSIONS
-	api.attachPermissions('*');
-	
-	// AUTHENTICATOR
+	// Define authenticator
 	const auth = new Auth(stack, 'Auth', {
 		authenticator: {
-			bind: [JWT_SECRET, FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, GOOGLE_CLIENT_ID, DEV_DOMAIN_NAME, PROD_DOMAIN_NAME],
+			bind: [
+				jwtSecret,
+				facebookAppId,
+				facebookAppSecret,
+				googleClientId,
+				devDomainName,
+				prodDomainName
+			],
 			handler: 'packages/functions/src/authenticator.handler'
 		}
 	});
 
-	// AUTH ATTACHMENTS
+	// Attach the authenticator to the stack
 	auth.attach(stack, { api });
 
-	// SITE
-	const site = new SvelteKitSite(stack, 'site', {
-		bind: [api, auth, VERSION],
+	// Define site
+	const site = new SvelteKitSite(stack, 'Site', {
+		bind: [api, auth, version],
 		path: 'packages/sveltekit/',
-		customDomain: {
-			domainName: "skits.michaelcuneo.com.au",
-			hostedZone: "michaelcuneo.com.au"
-		},
-		environment: {
-			API_URL: api.url,
-			PUBLIC_API_URL: api.url
-		},
+		customDomain: { domainName: 'skits.michaelcuneo.com.au', hostedZone: 'michaelcuneo.com.au' },
+		environment: { ApiUrl: api.url, PUBLIC_API_URL: api.url },
 		edge: false
 	});
 
-	stack.addOutputs({
-		ApiUrl: api.url,
-		url: site.url
-	});
+	// Add stack outputs
+	stack.addOutputs({ ApiUrl: api.url, Url: site.url });
 }

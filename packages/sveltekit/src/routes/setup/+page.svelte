@@ -62,7 +62,6 @@
 	div {
 		display: flex;
 		flex-direction: column;
-		min-height: 100dvh;
 		max-width: 65rem;
 		padding: 3rem 0 3rem 0;
 	}
@@ -71,5 +70,23 @@
 	}
 	.orange {
 		color: #c2947b;
+	}
+	@media screen and (max-width: 1200px) {
+		div {
+			max-width: 85rem;
+			padding: 3rem 3rem 3rem 3rem;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		div {
+			max-width: 95rem;
+			padding: 3rem 2rem 3rem 2rem;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		div {
+			max-width: 98rem;
+			padding: 3rem 1rem 3rem 1rem;
+		}
 	}
 </style>

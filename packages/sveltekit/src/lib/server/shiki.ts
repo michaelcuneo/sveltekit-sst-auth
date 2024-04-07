@@ -1,28 +1,37 @@
-import { getHighlighter } from "shiki";
+import { getHighlighter } from 'shiki';
 
 export type exportType = { default: string };
 
-export async function compute_codes() {
-  const highlighter = await getHighlighter({
-    themes: ["dark-plus"],
-    langs: ["html", "js", "css", "svelte", "sh"],
-  });
+/**
+ * Asynchronously computes code snippets with highlighted code using Shiki.
+ *
+ * @returns {Promise<Record<string, string>>} A Promise that resolves to a Record, where the keys are file names and the values are the highlighted code.
+ */
+export async function computeCodeSnippets() {
+	// Initialize Shiki highlighter with 'dark-plus' theme and supported languages
+	const highlighter = await getHighlighter({
+		themes: ['dark-plus'],
+		langs: ['html', 'js', 'css', 'svelte', 'sh']
+	});
 
-  const snippets: Record<string, exportType> = import.meta.glob("$lib/snippets/*", {
-    query: "raw",
-    eager: true,
-  });
+	// Import all code snippets from '$lib/snippets/' directory with 'raw' query and eager loading
+	const codeSnippets = import.meta.glob('$lib/snippets/*', {
+		query: 'raw',
+		eager: true
+	}) as Record<string, { default: string }>;
 
-  const codes = Object.fromEntries(Object.entries(snippets).map(transform));
+	// Map each code snippet to a tuple with the file name and highlighted code
+	const codeSnippetsWithHighlightedCode = Object.entries(codeSnippets).map(
+		([path, { default: fileCode }]) => {
+			// Extract file name and language from the path
+			const fileName = path.split('/').at(-1)!;
+			const lang = fileName.split('.').pop()!;
+			// Highlight the code using the highlighter
+			const highlightedCode = highlighter.codeToHtml(fileCode, { lang, theme: 'dark-plus' });
+			return [fileName, highlightedCode];
+		}
+	);
 
-  function transform([path, file_content]: [string, exportType]): [string, string] {
-    let fileCode = (file_content as exportType).default;
-    const file_name = path.split("/").at(-1)!;
-    const lang = file_name.split(".").pop()!;
-    const code = highlighter.codeToHtml(fileCode, { lang, theme: "dark-plus" });
-
-    return [file_name, code];
-  }
-
-  return codes;
+	// Return the computed code snippets as a Record, where the keys are file names and the values are the highlighted code
+	return Object.fromEntries(codeSnippetsWithHighlightedCode);
 }

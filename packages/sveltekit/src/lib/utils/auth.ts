@@ -1,60 +1,84 @@
-import { get, writable } from "svelte/store";
-import { v4 as uuid } from "uuid";
+import { get, writable } from 'svelte/store';
+import { v4 as uuid } from 'uuid';
 
 export type User = {
-  id: string;
-  email: string;
+	id: string;
+	email: string;
 };
 
 export type Session = {
-  id: string;
-  userId: string;
+	id: string;
+	userId: string;
 };
 
 const sessionsStore = writable<Session[]>([]);
 
-export function createSessionById(userId: string) {
-  const newSession: Session = {
-    id: uuid(),
-    userId,
-  };
+/**
+ * Creates a session for a user.
+ *
+ * @param userId The ID of the user to create a session for.
+ * @returns The newly created session.
+ */
+export function createSessionForUser(userId: string): Session {
+	// Create a new session object with a unique ID and the provided user ID.
+	const session: Session = {
+		id: uuid(), // Generate a unique ID for the session using the uuid package.
+		userId // Use the provided user ID for the session.
+	};
 
-  sessionsStore.update((previousSessions) => {
-    const filteredSessions = previousSessions.filter(
-      (session) => session.userId !== userId
-    );
+	// Update the sessions store by filtering out any existing sessions for the provided user,
+	// and adding the new session to the list.
+	sessionsStore.update((prevSessions) => [
+		...prevSessions.filter((s) => s.userId !== userId), // Filter out any existing sessions for the user.
+		session // Add the new session to the list.
+	]);
 
-    return [...filteredSessions, newSession];
-  });
-
-  return newSession;
+	return session; // Return the newly created session.
 }
 
-// Step 3
-export function validateSession(id: string) {
-  const sessions = get(sessionsStore);
+/**
+ * Validates a session by its ID.
+ *
+ * @param sessionId - The ID of the session to validate.
+ * @returns An object containing the valid session.
+ * @throws {Error} If the session does not exist.
+ */
+export function validateSession(sessionId: string): { session: Session } {
+	// Get the current list of sessions from the store.
+	const sessions = get(sessionsStore);
 
-  const sessionResult = sessions.find((session) => session.id === id);
+	// Find the session with the provided ID.
+	const session = sessions.find((session) => session.id === sessionId);
 
-  if (!sessionResult) {
-    throw new Error("Session does not exist");
-  }
+	// If the session does not exist, throw an error.
+	if (!session) {
+		throw new Error('Session does not exist');
+	}
 
-  return {
-    sessionResult,
-  };
+	// Return the valid session.
+	return { session };
 }
 
-export function signOut(id: string) {
-  const sessions = get(sessionsStore);
+/**
+ * Signs out a user by removing their session from the store.
+ *
+ * @param sessionId - The ID of the session to sign out.
+ * @throws {Error} If the session is not found.
+ */
+export function signOut(sessionId: string) {
+	// Get the current list of sessions from the store.
+	const sessions = get(sessionsStore);
 
-  const sessionFound = sessions.find((session) => session.id === id);
+	// Find the session with the provided ID.
+	const sessionToRemove = sessions.find((session) => session.id === sessionId);
 
-  if (!sessionFound) {
-    throw new Error("Session not found");
-  }
+	// If the session does not exist, throw an error.
+	if (!sessionToRemove) {
+		throw new Error('Session not found');
+	}
 
-  sessionsStore.update((previousSessions) => {
-    return previousSessions.filter((session) => session != sessionFound);
-  });
+	// Update the sessions store by filtering out the session to be removed.
+	sessionsStore.update((previousSessions) =>
+		previousSessions.filter((session) => session !== sessionToRemove)
+	);
 }

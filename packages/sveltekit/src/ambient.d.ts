@@ -16,7 +16,7 @@ type UserToken = {
 	userId: string;
 	iat: number;
 	exp: number;
-}
+};
 
 type UserLookup = {
 	id: string;
@@ -25,6 +25,10 @@ type UserLookup = {
 type Session = {
 	id: string;
 	userId: string;
+};
+
+type SessionResult = {
+	session: Session;
 };
 
 type AppSyncEvent = {

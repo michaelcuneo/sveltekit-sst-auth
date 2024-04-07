@@ -12,8 +12,10 @@
 
 <style>
 	div :global(pre) {
+		display: flex;
 		font-size: 1rem;
 		padding: 1.25rem;
+		width: auto;
 		border-radius: 0.5rem;
 		margin-block: 1rem;
 		overflow: auto;

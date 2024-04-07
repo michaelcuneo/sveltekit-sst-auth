@@ -1,10 +1,10 @@
-import { compute_codes } from "$lib/server/shiki";
-import type { PageServerLoad } from "./$types";
+import { computeCodeSnippets } from '$lib/server/shiki';
+import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
-  const codes = await compute_codes();
+	const codes = await computeCodeSnippets();
 
-  return {
-    codes,
-  };
+	return {
+		codes
+	};
 }) satisfies PageServerLoad;

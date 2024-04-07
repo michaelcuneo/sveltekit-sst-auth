@@ -1,3 +1,27 @@
+:root {
+	--primary-color: #a32727;
+	--secondary-color: #3c3a3a;
+	--background-color: #151414;
+	--on-background-color: #f7f1f1;
+	--error-color: #f44336;
+	--on-error-color: #f7f1f1;
+	--surface-color: #f7f1f1;
+	--on-surface-color: #151417;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--primary-color: #a32727;
+		--secondary-color: #3c3a3a;
+		--background-color: #f7f1f1;
+		--on-background-color: #151417;
+		--error-color: #f44336;
+		--on-error-color: #f7f1f1;
+		--surface-color: #151417;
+		--on-surface-color: #f7f1f1;
+	}
+}
+
 body {
 	display: flex;
 	flex-direction: column;
@@ -8,9 +32,9 @@ body {
 	font-weight: 300;
 	font-style: normal;
 	font-variation-settings: 'wdth' 100;
-	user-zoom: none;
 	-webkit-user-drag: none;
-	background: #151417;
+	background: var(--background-color);
+	color: var(--on-background-color);
 	overflow: scroll;
 	-webkit-user-drag: none;
 	-ms-overflow-style: none;

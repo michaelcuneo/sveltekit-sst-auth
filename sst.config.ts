@@ -1,5 +1,5 @@
 import { SSTConfig } from 'sst';
-import { SvelteKitSSTAuth } from './stacks/SSTAuthStack';
+import { SSTAuthStack } from './stacks/SSTAuthStack';
 
 export default {
 	config() {
@@ -9,6 +9,6 @@ export default {
 		};
 	},
 	stacks(app) {
-		app.stack(SvelteKitSSTAuth);
+		app.stack(SSTAuthStack);
 	}
 } satisfies SSTConfig;

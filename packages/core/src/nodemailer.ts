@@ -2,13 +2,8 @@ import nodemailer from 'nodemailer';
 
 import { Config } from 'sst/node/config';
 
-type Mailer = {
-	email: string;
-	authUrl: string;
-};
-
-export const mailer = async (data: Mailer) => {
-	const Transporter = nodemailer.createTransport({
+export const sendLoginLink = async (email: string, authUrl: string) => {
+	const transporter = nodemailer.createTransport({
 		service: Config.EMAIL_SERVICE,
 		host: Config.EMAIL_HOST,
 		port: Number(Config.EMAIL_PORT),
@@ -19,18 +14,15 @@ export const mailer = async (data: Mailer) => {
 		}
 	});
 
-	const text = `
-    <p>Click on this link and we will promptly log you in to ${Config.PROJECT_NAME}</p>
-    <a href=${data.authUrl}>LOGIN</a>`;
-
-	const mailOptions = {
+	const message = {
 		from: Config.EMAIL_USER,
-		to: data.email,
-		subject: `Hello, here is your Login Link for ${Config.PROJECT_NAME}`,
-		html: text
+		to: email,
+		subject: `Login link for ${Config.PROJECT_NAME}`,
+		html: `
+			<p>Click on the link to log in.</p>
+			<a href="${authUrl}">Login</a>
+		`
 	};
 
-	return Transporter.sendMail(mailOptions)
-		.then((res) => res)
-		.catch((err) => err);
+	return transporter.sendMail(message).catch((error) => error);
 };
