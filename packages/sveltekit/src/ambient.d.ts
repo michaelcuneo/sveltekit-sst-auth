@@ -27,10 +27,6 @@ type Session = {
 	userId: string;
 };
 
-type SessionResult = {
-	session: Session;
-};
-
 type AppSyncEvent = {
 	info: {
 		fieldName: string;

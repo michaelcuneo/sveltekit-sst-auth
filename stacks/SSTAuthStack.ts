@@ -44,7 +44,7 @@ export function SSTAuthStack({ stack }: StackContext) {
 			allowCredentials: true,
 			allowHeaders: ['content-type'],
 			allowMethods: ['ANY'],
-			allowOrigins: ['https://localhost:3000', 'https://skits.michaelcuneo.com.au']
+			allowOrigins: ['http://localhost:3000', 'https://skits.michaelcuneo.com.au']
 		},
 		defaults: {
 			function: {
@@ -92,8 +92,8 @@ export function SSTAuthStack({ stack }: StackContext) {
 		bind: [api, auth, version],
 		path: 'packages/sveltekit/',
 		customDomain: { domainName: 'skits.michaelcuneo.com.au', hostedZone: 'michaelcuneo.com.au' },
-		environment: { ApiUrl: api.url, PUBLIC_API_URL: api.url },
-		edge: false
+		environment: { API_URL: api.url, PUBLIC_API_URL: api.url },
+		edge: false // Change this is you want the site to be deployed as an edge function.
 	});
 
 	// Add stack outputs
