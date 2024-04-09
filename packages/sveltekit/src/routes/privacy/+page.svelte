@@ -33,9 +33,10 @@
 		</p>
 		<h3>4. Data Sharing and Disclosure</h3>
 		<p>
-			We may share your personal information with third-party service providers to facilitate our
-			services or perform services on our behalf. We may also disclose your personal information in
-			response to lawful requests by public authorities or to comply with legal requirements.
+			We will never share your personal information with third-party service providers to facilitate
+			our services or perform services on our behalf. We will never disclose your personal
+			information in response to lawful requests by public authorities or to comply with legal
+			requirements.
 		</p>
 		<h3>5. Links to Other Sites</h3>
 		<p>

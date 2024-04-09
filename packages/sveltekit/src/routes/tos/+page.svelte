@@ -21,8 +21,8 @@
 		<h3>3. Intellectual Property</h3>
 		<p>
 			All content on our website and services, including but not limited to text, graphics, logos,
-			images, and software, is the property of SvelteKit SST Auth and is protected by copyright and
-			other intellectual property laws.
+			images, and software, is all free to use, this is a demonstration site for the purposes of
+			education.
 		</p>
 		<h3>4. Limitation of Liability</h3>
 		<p>
