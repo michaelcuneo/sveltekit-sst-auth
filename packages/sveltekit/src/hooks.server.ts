@@ -16,7 +16,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const sessionCookie = event.cookies.get(SESSION_COOKIE_NAME);
 
 	// Initialize the user session with empty id and userId
-	let userSession = { id: '', userId: '' };
+	let userSession = undefined;
 
 	// If a session cookie is present, validate the session and update the user session
 	if (sessionCookie) {

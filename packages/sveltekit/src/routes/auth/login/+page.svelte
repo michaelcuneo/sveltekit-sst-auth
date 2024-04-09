@@ -36,11 +36,9 @@
 		<a class="form" href={PUBLIC_API_URL + `/auth/google/authorize`}>
 			<GoogleButton />
 		</a>
-		<!--
 		<a class="form" href={PUBLIC_API_URL + `/auth/github/authorize`}>
 			<GithubButton />
 		</a>
-		-->
 		<form class="form" method="POST" action="?/magicLinks" use:enhance={onSubmit}>
 			<h4>LOGIN WITH EMAIL</h4>
 			<p>
@@ -83,7 +81,7 @@
 		display: flex;
 		flex-direction: column;
 		width: 300px;
-		background: #242424;
+		background: var(--surface-color);
 		padding: 0.8rem;
 		margin: 0.8rem;
 		border-radius: 10px;

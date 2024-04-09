@@ -4,23 +4,15 @@
 
 // Svelte Colors!
 @use '@material/theme/index' as theme with (
-  $primary: #A32727,
-  $secondary: #3C3A3A,
-  $surface: #F7F1F1,
-  $background: #F7F1F1,
-  $error: color-palette.$red-900
+	$primary: #a32727,
+	$secondary: #3c3a3a,
+	$surface: #f7f1f1,
+	$background: #f7f1f1,
+	$error: color-palette.$red-900
 );
 
 html,
 body {
-  background-color: theme.$surface;
-  color: theme.$on-surface;
-}
-
-a {
-  color: #F7F1F1;
-  text-decoration: none;
-}
-a:hover {
-  color: color.scale(#F7F1F1, $lightness: -35%);
+	background-color: theme.$surface;
+	color: theme.$on-surface;
 }

@@ -23,5 +23,6 @@
 		flex-direction: column;
 		align-items: center;
 		min-height: 100dvh;
+		max-height: 100dvh;
 	}
 </style>

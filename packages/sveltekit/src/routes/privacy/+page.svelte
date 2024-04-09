@@ -60,7 +60,7 @@
 		<h3>8. Contact Us</h3>
 		<p>
 			If you have any questions about this Privacy Policy, please contact us at
-			me@michaelcuneo.com.au.
+			<a href="mailto:me@michaelcuneo.com.au">me@michaelcuneo.com.au</a>
 		</p>
 		<p>
 			By using our website or services, you consent to the collection and use of your information in
@@ -77,9 +77,30 @@
 		padding: 3rem 0 3rem 0;
 	}
 	.licence {
-		width: 1000px;
-		background: #242424;
+		width: auto;
+		background: var(--surface-color);
 		padding: 1rem;
 		border-radius: 10px;
+	}
+	a {
+		color: var(--primary-color);
+	}
+	@media screen and (max-width: 1200px) {
+		.wrapper {
+			max-width: 85rem;
+			padding: 3rem 3rem 3rem 3rem;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.wrapper {
+			max-width: 95rem;
+			padding: 3rem 2rem 3rem 2rem;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.wrapper {
+			max-width: 98rem;
+			padding: 3rem 1rem 3rem 1rem;
+		}
 	}
 </style>

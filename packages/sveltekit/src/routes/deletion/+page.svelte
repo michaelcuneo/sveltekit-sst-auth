@@ -65,10 +65,31 @@
 		max-width: 65rem;
 		padding: 3rem 0 3rem 0;
 	}
+	a {
+		color: var(--primary-color);
+	}
 	.licence {
-		width: 1000px;
-		background: #242424;
+		width: auto;
+		background: var(--surface-color);
 		padding: 1rem;
 		border-radius: 10px;
+	}
+	@media screen and (max-width: 1200px) {
+		.wrapper {
+			max-width: 85rem;
+			padding: 3rem 3rem 3rem 3rem;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.wrapper {
+			max-width: 95rem;
+			padding: 3rem 2rem 3rem 2rem;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.wrapper {
+			max-width: 98rem;
+			padding: 3rem 1rem 3rem 1rem;
+		}
 	}
 </style>

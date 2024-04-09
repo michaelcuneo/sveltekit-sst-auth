@@ -35,7 +35,7 @@
 
 <style>
 	.gsi-material-button {
-		background-color: WHITE;
+		background-color: white;
 		background-image: none;
 		border: 1px solid #747775;
 		-webkit-border-radius: 4px;

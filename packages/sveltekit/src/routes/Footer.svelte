@@ -21,4 +21,9 @@
 		font-size: 0.8rem;
 		color: black;
 	}
+	@media screen and (max-width: 1200px) {
+		footer {
+			display: none;
+		}
+	}
 </style>

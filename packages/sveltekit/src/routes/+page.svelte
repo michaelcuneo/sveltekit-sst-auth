@@ -1,9 +1,9 @@
-<div>
-	<h2>What is sveltekit-sst-auth?</h2>
+<div class="wrapper">
+	<h2>What is <span class="lobster">Sveltekit SST Auth</span> ?</h2>
 	<p>
 		This project is intended to be a simple yet fully fledged operational demonstration and
-		boilerplate for SvelteKit with Authentication through Google, Facebook, or Magic Links, using
-		SST, hosted on AWS, as a Lambda application.
+		boilerplate for SvelteKit with Authentication through Google, Facebook, GitHub, or Magic Links,
+		using SST, hosted on AWS, as a Lambda application. Simple right?
 	</p>
 	<h2>How to test the functionality of this project?</h2>
 	<p>
@@ -13,6 +13,29 @@
 		<a href="/protected"><code class="blue">PROTECTED</code></a>
 		routes.
 	</p>
+	<h2>How do I set this up locally on my own machine, with my own federated identities?</h2>
+	<p>See the setup page here... <a href="/setup"><code class="blue">SETUP</code></a></p>
+	<h2>Current Features</h2>
+	<ul>
+		<li>Authentication with Google, Facebook, GitHub, and Magic Links.</li>
+		<li>Default Licence, Terms of Service, Privacy and Data Deletion policies.</li>
+		<li>Dark Mode / Light Mode</li>
+	</ul>
+	<h2>Future Features</h2>
+	<ul>
+		<li>Automatic Data Deletion with a simple DELETE ACCOUNT button.</li>
+		<li>A better protected route with demonstration of authenticated API calls.</li>
+		<li>
+			Command-Line scripted on-boarding & bootstrap, so that you don't have to cut out each auth
+			method that you don't need.
+		</li>
+		<li>
+			Dark/Light switch <i>Low Priority, it is getting a bit outdated?</i>
+		</li>
+		<li>
+			i18n <i>Low Priority, better methods?</i>
+		</li>
+	</ul>
 	<h2>Why did I make this really time consuming boilerplate?</h2>
 	<p>
 		I wanted to have a boilerplate for my own projects; which are many, yet also keep it future
@@ -25,6 +48,11 @@
 		Light Mode, and there's no bloaty messy Tailwind all over the markup. This is just my personal
 		preference, feel free to strip it apart and add whatever styling library you like, but if you do
 		like SMUI then you're ready to go with a simple git clone and a few minutes of setup.
+		<br /><br />
+		I may switch this UX to melt UI in the future, but I don't think the UI/UX choice is a huge decisions
+		that I should be making because it is agnostic to SST and it's functionality which is the main reason
+		of this boilerplate. The only thing I have against 'melt' is like other UX libraries, it's obsession
+		to Tailwind.
 		<br /><br />
 		Rather than using a sign up flow, bringing you back to a log in flow, the entire AUTH functionality
 		is done from the Login page. If the user upon login does not exist in the database, it will be added
@@ -48,16 +76,10 @@
 		this functionality, but for now it's just a login. ETA for auth calls is
 		<code class="orange">8 days.</code>
 	</p>
-	<p>
-		All Terms of Service, Privacy and Data Deletion policies are included so that anyone either
-		testing this app 'can remove their data from the test facilities', or use this straight out of
-		the box to ramp up anything that uses authentication quite fast, just change the variables of
-		the relevant areas to suit your business or project and it's good to go.
-	</p>
 </div>
 
 <style>
-	div {
+	.wrapper {
 		display: flex;
 		flex-direction: column;
 		max-width: 65rem;
@@ -69,20 +91,32 @@
 	.orange {
 		color: #c2947b;
 	}
+	.lobster {
+		font-family: 'Lobster', sans-serif;
+		font-weight: 400;
+		font-style: normal;
+		font-size: 2rem;
+	}
+	li::marker {
+		color: #a32727;
+	}
+	a {
+		color: var(--primary-color);
+	}
 	@media screen and (max-width: 1200px) {
-		div {
+		.wrapper {
 			max-width: 85rem;
 			padding: 3rem 3rem 3rem 3rem;
 		}
 	}
 	@media screen and (max-width: 768px) {
-		div {
+		.wrapper {
 			max-width: 95rem;
 			padding: 3rem 2rem 3rem 2rem;
 		}
 	}
 	@media screen and (max-width: 480px) {
-		div {
+		.wrapper {
 			max-width: 98rem;
 			padding: 3rem 1rem 3rem 1rem;
 		}

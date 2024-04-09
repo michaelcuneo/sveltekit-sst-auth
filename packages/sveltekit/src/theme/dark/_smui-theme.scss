@@ -16,11 +16,3 @@ body {
   background-color: #151414;
   color: theme.$on-surface;
 }
-
-a {
-  color: #F7F1F1;
-  text-decoration: none;
-}
-a:hover {
-  color: color.scale(#F7F1F1, $lightness: -15%);
-}

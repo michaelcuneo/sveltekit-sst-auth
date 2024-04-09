@@ -1,5 +1,6 @@
 <div class="wrapper">
 	<div class="licence">
+		<h2>Licence</h2>
 		<p>This is free and unencumbered software released into the public domain.</p>
 		<p>
 			Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software,
@@ -35,9 +36,30 @@
 		padding: 3rem 0 3rem 0;
 	}
 	.licence {
-		width: 1000px;
-		background: #242424;
+		width: auto;
+		background: var(--surface-color);
 		padding: 1rem;
 		border-radius: 10px;
+	}
+	a {
+		color: var(--primary-color);
+	}
+	@media screen and (max-width: 1200px) {
+		.wrapper {
+			max-width: 85rem;
+			padding: 3rem 3rem 3rem 3rem;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.wrapper {
+			max-width: 95rem;
+			padding: 3rem 2rem 3rem 2rem;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.wrapper {
+			max-width: 98rem;
+			padding: 3rem 1rem 3rem 1rem;
+		}
 	}
 </style>

@@ -51,7 +51,7 @@
 		<h3>8. Contact Us</h3>
 		<p>
 			If you have any questions about these Terms of Service, please contact us at
-			me@michaelcuneo.com.au.
+			<a href="mailto:me@michaelcuneo.com.au">me@michaelcuneo.com.au</a>
 		</p>
 		<p>By using our website or services, you agree to these Terms of Service.</p>
 	</div>
@@ -66,9 +66,30 @@
 		padding: 3rem 0 3rem 0;
 	}
 	.licence {
-		width: 1000px;
+		width: auto;
 		padding: 1rem;
-		background: #242424;
+		background: var(--surface-color);
 		border-radius: 10px;
+	}
+	a {
+		color: var(--primary-color);
+	}
+	@media screen and (max-width: 1200px) {
+		.wrapper {
+			max-width: 85rem;
+			padding: 3rem 3rem 3rem 3rem;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.wrapper {
+			max-width: 95rem;
+			padding: 3rem 2rem 3rem 2rem;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.wrapper {
+			max-width: 98rem;
+			padding: 3rem 1rem 3rem 1rem;
+		}
 	}
 </style>

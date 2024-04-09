@@ -47,7 +47,7 @@ export const handler = AuthHandler({
 					statusCode: 302,
 					headers: {
 						Location: process.env.IS_LOCAL
-							? 'https://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
+							? 'http://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
 							: 'https://' + Config.PROD_DOMAIN_NAME + `/auth/callback?token=${token}`
 					},
 					body: JSON.stringify({
@@ -62,15 +62,29 @@ export const handler = AuthHandler({
 		github: GithubAdapter({
 			clientID: 'Iv1.b4ef56eb0aebc1e2',
 			clientSecret: '5aaca85bdf323813493cf56d95c7ffbc0dc18319',
-			scope: 'openid email',
+			scope: 'user',
 
 			onSuccess: async (tokenset) => {
-				const claims = tokenset.claims();
-				const user: User = (await fromEmail(claims.email!)) as User;
+				// Use the access_token to get the email from GitHub,
+				// because it doesn't exist in the tokenset.
+				const claims = tokenset.access_token;
+				let email;
+
+				await fetch(`https://api.github.com/user/emails`, {
+					headers: {
+						Authorization: `token ${claims}`
+					}
+				})
+					.then((res) => res.json())
+					.then((res) => {
+						email = res[0].email;
+					});
+
+				const user: User = (await fromEmail(email!)) as User;
 				let newUser: User | undefined = undefined;
 
 				if (user === undefined) {
-					newUser = (await create(claims.email!)) as User;
+					newUser = (await create(email!)) as User;
 				}
 				const token = jwt.sign(
 					{ userId: user ? user.id : (newUser?.id as string) },
@@ -78,11 +92,13 @@ export const handler = AuthHandler({
 					{ expiresIn: '1m' }
 				);
 
+				console.log(token);
+
 				return {
 					statusCode: 302,
 					headers: {
 						Location: process.env.IS_LOCAL
-							? 'https://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
+							? 'http://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
 							: 'https://' + Config.PROD_DOMAIN_NAME + `/auth/callback?token=${token}`
 					},
 					body: JSON.stringify({
@@ -116,7 +132,7 @@ export const handler = AuthHandler({
 					statusCode: 302,
 					headers: {
 						Location: process.env.IS_LOCAL
-							? 'https://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
+							? 'http://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
 							: 'https://' + Config.PROD_DOMAIN_NAME + `/auth/callback?token=${token}`
 					},
 					body: JSON.stringify({
@@ -156,7 +172,7 @@ export const handler = AuthHandler({
 					statusCode: 302,
 					headers: {
 						Location: process.env.IS_LOCAL
-							? 'https://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
+							? 'http://' + Config.DEV_DOMAIN_NAME + `/auth/callback?token=${token}`
 							: 'https://' + Config.PROD_DOMAIN_NAME + `/auth/callback?token=${token}`
 					},
 					body: JSON.stringify({

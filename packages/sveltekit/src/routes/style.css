@@ -1,25 +1,48 @@
 :root {
 	--primary-color: #a32727;
 	--secondary-color: #3c3a3a;
-	--background-color: #151414;
-	--on-background-color: #f7f1f1;
+	--background-color: #f7f1f1;
+	--on-background-color: #151417;
 	--error-color: #f44336;
 	--on-error-color: #f7f1f1;
-	--surface-color: #f7f1f1;
+	--surface-color: #dddddd;
 	--on-surface-color: #151417;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
 	:root {
 		--primary-color: #a32727;
 		--secondary-color: #3c3a3a;
-		--background-color: #f7f1f1;
-		--on-background-color: #151417;
+		--background-color: #151414;
+		--on-background-color: #f7f1f1;
 		--error-color: #f44336;
 		--on-error-color: #f7f1f1;
 		--surface-color: #151417;
-		--on-surface-color: #f7f1f1;
+		--on-surface-color: #dddddd;
 	}
+}
+
+*,
+*:after,
+*:before {
+	box-sizing: inherit;
+}
+
+html {
+	box-sizing: border-box;
+}
+
+html {
+	overflow: scroll;
+	overflow-x: hidden;
+}
+::-webkit-scrollbar {
+	width: 0; /* Remove scrollbar space */
+	background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+	background: #ff0000;
 }
 
 body {
@@ -32,19 +55,43 @@ body {
 	font-weight: 300;
 	font-style: normal;
 	font-variation-settings: 'wdth' 100;
-	-webkit-user-drag: none;
 	background: var(--background-color);
 	color: var(--on-background-color);
 	overflow: scroll;
-	-webkit-user-drag: none;
 	-ms-overflow-style: none;
 	/* IE and Edge */
 	scrollbar-width: none;
 	/* Firefox */
 }
 
-::-webkit-scrollbar {
-	display: none;
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+	background-color: #eee;
+	clip: auto !important;
+	clip-path: none;
+	color: #444;
+	display: block;
+	font-size: 1em;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000;
 }
 
 .urbanist-bold {

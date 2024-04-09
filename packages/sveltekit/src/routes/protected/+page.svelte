@@ -13,4 +13,22 @@
 	h4 {
 		line-height: 0.4rem;
 	}
+	@media screen and (max-width: 1200px) {
+		.wrapper {
+			max-width: 85rem;
+			padding: 3rem 3rem 3rem 3rem;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.wrapper {
+			max-width: 95rem;
+			padding: 3rem 2rem 3rem 2rem;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.wrapper {
+			max-width: 98rem;
+			padding: 3rem 1rem 3rem 1rem;
+		}
+	}
 </style>
