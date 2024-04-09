@@ -17,7 +17,7 @@ export function SSTAuthStack({ stack, app }: StackContext) {
 		value: 'localhost:3000'
 	});
 	const prodDomainName = new Config.Parameter(stack, 'PROD_DOMAIN_NAME', {
-		value: 'skits.michaelcuneo.com.au'
+		value: 'skitsa.michaelcuneo.com.au'
 	});
 	const hostedZoneName = new Config.Parameter(stack, 'HOSTED_ZONE_NAME', {
 		value: 'michaelcuneo.com.au'
@@ -38,6 +38,8 @@ export function SSTAuthStack({ stack, app }: StackContext) {
 	const googleClientId = new Config.Secret(stack, 'GOOGLE_CLIENT_ID');
 	const facebookAppId = new Config.Secret(stack, 'FACEBOOK_APP_ID');
 	const facebookAppSecret = new Config.Secret(stack, 'FACEBOOK_APP_SECRET');
+	const githubClientId = new Config.Secret(stack, 'GITHUB_CLIENT_ID');
+	const githubClientSecret = new Config.Secret(stack, 'GITHUB_CLIENT_SECRET');
 	const jwtSecret = new Config.Secret(stack, 'JWT_SECRET');
 
 	// Define users table
@@ -70,6 +72,8 @@ export function SSTAuthStack({ stack, app }: StackContext) {
 					emailAppPass,
 					facebookAppId,
 					facebookAppSecret,
+					githubClientId,
+					githubClientSecret,
 					googleClientId
 				]
 			}
@@ -89,6 +93,8 @@ export function SSTAuthStack({ stack, app }: StackContext) {
 				facebookAppId,
 				facebookAppSecret,
 				googleClientId,
+				githubClientId,
+				githubClientSecret,
 				devDomainName,
 				prodDomainName
 			],

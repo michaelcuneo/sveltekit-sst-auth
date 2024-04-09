@@ -22,7 +22,6 @@
 		height: 45px;
 		background-color: #24292e;
 		background-image: none;
-		border: 1px solid #747775;
 		border-radius: 4px;
 		letter-spacing: 0.25px;
 		outline: none;

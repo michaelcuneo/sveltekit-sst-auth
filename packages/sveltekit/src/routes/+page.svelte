@@ -1,11 +1,12 @@
 <div class="wrapper">
-	<h2>What is <span class="lobster">Sveltekit SST Auth</span> ?</h2>
+	<h2>What is <span class="lobster">Skitsa</span> ?</h2>
+	<h4>(SvelteKit SST Auth)</h4>
 	<p>
 		This project is intended to be a simple yet fully fledged operational demonstration and
 		boilerplate for SvelteKit with Authentication through Google, Facebook, GitHub, or Magic Links,
 		using SST, hosted on AWS, as a Lambda application. Simple right?
 	</p>
-	<h2>How to test the functionality of this project?</h2>
+	<h3>How to test the functionality of this project?</h3>
 	<p>
 		Simply use the
 		<a href="/auth/login"><code class="blue">LOGIN</code></a>
@@ -13,15 +14,15 @@
 		<a href="/protected"><code class="blue">PROTECTED</code></a>
 		routes.
 	</p>
-	<h2>How do I set this up locally on my own machine, with my own federated identities?</h2>
+	<h3>How do I set this up locally on my own machine, with my own federated identities?</h3>
 	<p>See the setup page here... <a href="/setup"><code class="blue">SETUP</code></a></p>
-	<h2>Current Features</h2>
+	<h3>Current Features</h3>
 	<ul>
 		<li>Authentication with Google, Facebook, GitHub, and Magic Links.</li>
 		<li>Default Licence, Terms of Service, Privacy and Data Deletion policies.</li>
 		<li>Dark Mode / Light Mode</li>
 	</ul>
-	<h2>Future Features</h2>
+	<h3>Future Features</h3>
 	<ul>
 		<li>Automatic Data Deletion with a simple DELETE ACCOUNT button.</li>
 		<li>A better protected route with demonstration of authenticated API calls.</li>
@@ -36,7 +37,15 @@
 			i18n <i>Low Priority, better methods?</i>
 		</li>
 	</ul>
-	<h2>Why did I make this really time consuming boilerplate?</h2>
+	<h3>TODO:</h3>
+	<ul>
+		<li>Fix the bad theme</li>
+		<li>Better setup instructions, including all of the FB/Google/GitHub App Config</li>
+		<li>Use accordion for the Setup Page Steps</li>
+		<li>Hire a personal assistant</li>
+		<li>Make a flipload more Coffee</li>
+	</ul>
+	<h3>Why did I make this really time consuming boilerplate?</h3>
 	<p>
 		I wanted to have a boilerplate for my own projects; which are many, yet also keep it future
 		proofed so that I can just drop in any of my own monorepo components to serve my own needs,
@@ -96,9 +105,6 @@
 		font-weight: 400;
 		font-style: normal;
 		font-size: 2rem;
-	}
-	li::marker {
-		color: #a32727;
 	}
 	a {
 		color: var(--primary-color);

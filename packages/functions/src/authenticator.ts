@@ -60,8 +60,8 @@ export const handler = AuthHandler({
 			}
 		}),
 		github: GithubAdapter({
-			clientID: 'Iv1.b4ef56eb0aebc1e2',
-			clientSecret: '5aaca85bdf323813493cf56d95c7ffbc0dc18319',
+			clientID: Config.GITHUB_CLIENT_ID,
+			clientSecret: Config.GITHUB_CLIENT_SECRET,
 			scope: 'user',
 
 			onSuccess: async (tokenset) => {
@@ -91,8 +91,6 @@ export const handler = AuthHandler({
 					Config.JWT_SECRET,
 					{ expiresIn: '1m' }
 				);
-
-				console.log(token);
 
 				return {
 					statusCode: 302,

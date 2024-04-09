@@ -22,8 +22,7 @@
 <svelte:window on:keydown={handleNavWithKey} />
 
 <header role="navigation">
-	<a class="title" href="/">SvelteKit SST Auth</a>
-	<a class="mobileTitle" href="/">Skita</a>
+	<a class="title" href="/">Skitsa</a>
 	<div class="nav">
 		<a class="urbanist-bold" href="/">HOME</a>
 		<a class="urbanist-bold" href="/setup">SETUP</a>
@@ -32,7 +31,9 @@
 			<a class="urbanist-bold" href="/auth/login">LOGIN</a>
 		{:else}
 			<form action="/auth/logout" method="POST" use:enhance>
-				<IconButton size="mini" class="material-icons">logout</IconButton>
+				<IconButton size="mini" class="material-icons" style="color: var(--primary-color)">
+					logout</IconButton
+				>
 			</form>
 		{/if}
 		<a class="urbanist-bold" href="https://github.com/michaelcuneo/sveltekit-auth"
@@ -62,7 +63,9 @@
 		<a class="urbanist-bold" href="/auth/login" on:click={handleNav}>LOGIN</a>
 	{:else}
 		<form action="/auth/logout" method="POST" use:enhance>
-			<button class="urbanist-bold" on:click={handleNav}>LOGOUT</button>
+			<a class="urbanist-bold" href="#"
+				><button class="urbanist-bold" on:click={handleNav}>LOGOUT</button></a
+			>
 		</form>
 	{/if}
 	<footer role="doc-credits" class="urbanist-bold">
@@ -89,12 +92,13 @@
 	header {
 		display: flex;
 		align-items: center;
-		background: #a32727;
+		background: var(--secondary-color);
 		padding: 1rem;
 		width: 100%;
 		height: 60px;
 	}
 	a {
+		color: var(--primary-color);
 		padding: 0rem 0.5rem;
 	}
 	.nav {
@@ -103,13 +107,6 @@
 		margin-left: auto;
 	}
 	.title {
-		font-family: 'Lobster', sans-serif;
-		font-weight: 400;
-		font-style: normal;
-		font-size: 1.2rem;
-	}
-	.mobileTitle {
-		display: none;
 		font-family: 'Lobster', sans-serif;
 		font-weight: 400;
 		font-style: normal;
@@ -129,7 +126,7 @@
 	.bar3 {
 		width: 35px;
 		height: 5px;
-		background-color: #f1f1f1;
+		background-color: var(--primary-color);
 		margin: 6px 0;
 		transition: 0.4s;
 	}
@@ -171,7 +168,7 @@
 		outline: inherit;
 	}
 	p {
-		margin: 0;
+		margin: 0.2rem;
 	}
 	@media screen and (max-width: 1200px) {
 		.nav {
@@ -185,12 +182,6 @@
 			position: fixed;
 			top: 10px;
 			right: 14px;
-		}
-		.title {
-			display: none;
-		}
-		.mobileTitle {
-			display: block;
 		}
 		.sidenav {
 			height: 100%;
@@ -221,7 +212,7 @@
 
 		/* When you mouse over the navigation links, change their color */
 		.sidenav a:hover {
-			color: var(--on-surface-color);
+			color: var(--primary-color);
 		}
 		/* Position and style the close button (top right corner) */
 		.sidenav .closebtn {
