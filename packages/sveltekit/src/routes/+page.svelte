@@ -39,6 +39,7 @@
 	</ul>
 	<h3>TODO:</h3>
 	<ul>
+		<li>Better Session Management</li>
 		<li>Fix the bad theme</li>
 		<li>Better setup instructions, including all of the FB/Google/GitHub App Config</li>
 		<li>Use accordion for the Setup Page Steps</li>

@@ -12,7 +12,7 @@
 		width: 100%;
 		margin-top: auto;
 		flex-direction: row;
-		background: #f7f1f1;
+		background: var(--surface-a50);
 		font-size: 0.8rem;
 		padding: 1rem;
 		color: black;

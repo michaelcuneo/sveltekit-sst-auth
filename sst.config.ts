@@ -5,7 +5,8 @@ export default {
 	config() {
 		return {
 			name: 'sveltekit-sst-auth',
-			region: 'ap-southeast-2'
+			region: 'ap-southeast-2',
+			profile: 'private'
 		};
 	},
 	stacks(app) {

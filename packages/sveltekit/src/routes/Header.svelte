@@ -92,7 +92,7 @@
 	header {
 		display: flex;
 		align-items: center;
-		background: var(--secondary-color);
+		background: var(--surface-color);
 		padding: 1rem;
 		width: 100%;
 		height: 60px;
